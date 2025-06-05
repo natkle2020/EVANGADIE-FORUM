@@ -1,37 +1,19 @@
-import express from "express";
-import db from "../db/index.js";
-import authenticate from "../middleware/auth.js";
+import mysql from 'mysql2/promise';
+import dotenv from 'dotenv';
+dotenv.config();
+const dbconfig = {
+    host: process.env.DB_HOST || 'localhost',
+    port: process.env.DB_PORT || 3306,
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD  ,
+    database: process.env.DB_NAME || 'evangadi-db',
+    waitForConnections: true,
+    connectionLimit: 10,
+    queueLimit: 0,
 
-const router = express.Router();
+}
 
-// POST /api/answer
-router.post("/", authenticate, async (req, res) => {
-	const { questionId, answer } = req.body;
-	const userId = req.user.userid;
+// Creating connection pool
+const pool = mysql.createPool(dbconfig);
 
-	if (!questionId || !answer) {
-		return res.status(400).json({
-			error: "Bad Request",
-			message: "Please provide questionId and answer",
-		});
-	}
-
-	try {
-		await db.query(
-			"INSERT INTO answers (question_id, user_id, answer) VALUES (?, ?, ?)",
-			[questionId, userId, answer]
-		);
-
-		return res.status(201).json({
-			message: "Answer posted successfully",
-		});
-	} catch (err) {
-		console.error(err);
-		return res.status(500).json({
-			error: "Server Error",
-			message: "Something went wrong",
-		});
-	}
-});
-
-export default router;
+export default pool;
