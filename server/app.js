@@ -1,40 +1,71 @@
-// 1. Imports
 import express from "express";
-//questions routes middleware file
-import questionRoutes from "./Routes/questionRouter.js";
+import cors from "cors";
+import pool from "./config/databaseConfig";
+import { createAllTables } from "./controller/createAllTables";
+import userRouter from "./Routes/userRouter";
+import answerRouter from "./Routes/answerRouter";
+import questionRouter from "./Routes/questionRouter";
 
-// 2. App setup
 const app = express();
+const port = process.env.PORT;
+
+// ✅ Middlewares
+app.use(cors());
 app.use(express.json());
-const port = 3100;
 
-// 3. questions routes middleware
-// app.use("/api/question", questionRoutes);
-app.get("/api/question", (req,res)=>{
-  res.send('Welcome')
-});
+//API Routes
+app.use("api/auth", userRouter);
+app.use("/api/question", questionRouter); //question without -s
+app.use("/api/answers", answerRouter);
 
-// 4. Server start
-app.listen(port, (err) => {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log(`Server is running on port ${port}`);
+// ✅ Test DB Connection
+const testConnection = async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log("✅ MySQL connected via pool!");
+    connection.release();
+    return true;
+  } catch (err) {
+    console.error("❌ MySQL error:", err); //Logging the Whole Error object for debugging
+    return false;
   }
-});
+};
 
-// async function start() {
-//   try {
-//     const result = await dbconnection.execute("select 'test' ");
-//     await app.listen(port);
-//     console.log("database connection established");
-//     console.log(`listening on ${port}`);
-//   } catch (error) {
-//     console.log(error.message);
-//   }
-// }
-// start()
+// ✅ Start the server
+const startServer = async () => {
+  console.log("🔄 Testing database connection...");
+  const isConnected = await testConnection();
 
+  if (!isConnected) {
+    console.error("Failed to connect to database. Exiting...");
+    process.exit(1); //Kills the app if database fails
+  }
+
+  if (process.env.INIT_DB === "true") {
+    try {
+      await createAllTables();
+    } catch (err) {
+      console.error("Failed to initialize tables. Exiting...");
+      process.exit(1);
+    }
+  }
+
+  //Start Listening
+  const server = app.listen(port, () => {
+    console.log(`listening on ${port}`);
+  });
+
+  // Handle server startup errors
+  server.on("error", (err) => {
+    console.error("Server startup error:", err.message);
+    process.exit(1);
+  });
+};
+
+// Start everything
+startServer();
+
+//Bereket's and Bere's tasks
 // 8.Title: Implement API Endpoint: Get All Questions
 // Description: Develop the API endpoint to fetch all questions.
 // Endpoint: api/question
