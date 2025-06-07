@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import pool from './config/databaseConfig';
-import { createAllTables } from './controller/createAllTables';
-import userRouter from './Routes/userRouter';
-import answerRouter from './Routes/answerRouter';
-import questionRouter from './Routes/questionRouter'
+import pool from './config/databaseConfig.js';
+import { createAllTables } from './controller/createAllTables.js';
+import userRouter from './Routes/userRouter.js';
+import answerRouter from './Routes/answerRouter.js';
+import questionRouter from './Routes/questionRouter.js'
 
 const app = express();
 const port = process.env.PORT;

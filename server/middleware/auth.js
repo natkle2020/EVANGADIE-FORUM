@@ -1,4 +1,5 @@
-// middleware/auth.js
+
+// middleware/verifyToken.js
 
 const jwt = require("jsonwebtoken");
 
@@ -18,7 +19,7 @@ const token = authHeader.split(" ")[1];
 
 try {
     // 2. Verify token using secret
-
+    
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // 3. Attach user info to request
@@ -29,14 +30,16 @@ try {
     };
 
     // 4. Move to next middleware/route
-    
+
     next();
 } catch (err) {
     return res.status(401).json({
     error: "Unauthorized",
     message: "Authentication invalid",
     });
-
 }
+};
 
 module.exports = auth;
+
+
