@@ -1,19 +1,28 @@
-
+//bereket
 //1. all question
-export function getAllQuestions(req, res) {
+import dbConnection from "../config/databaseConfig"; 
+
+export async function getAllQuestions(req, res) {
   try {
+    const [rows] = await dbConnection.execute(`
+      SELECT * FROM questions 
+      ORDER BY time DESC 
+      LIMIT 5
+    `);
+
     res.status(200).json({
       success: true,
-      count: questions.length,
-      data: questions,
+      data: rows,
     });
   } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
       message: "Internal Server Error",
     });
   }
 }
+
 
 
 
