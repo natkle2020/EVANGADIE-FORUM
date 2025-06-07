@@ -4,15 +4,7 @@ import { getAllQuestions } from "../controller/questionController.js";
 const router = express.Router();
 
 //all question route
-router.get("/", getAllQuestions);
-
-
-//one question route // suggestion for a teammate
-// router.get("/:question_id", getQuestionById);
-
-//post question route // suggestion for a teammate
-// router.post("/", createQuestion);
-
+router.get("/all-questions", getAllQuestions);
 export default router;
 
 
