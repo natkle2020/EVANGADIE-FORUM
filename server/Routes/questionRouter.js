@@ -4,7 +4,7 @@ import { getAllQuestions } from "../controller/questionController.js";
 const router = express.Router();
 
 //all question route
-router.get("/all-questions", getAllQuestions);
+router.get("/", getAllQuestions);
 export default router;
 
 
