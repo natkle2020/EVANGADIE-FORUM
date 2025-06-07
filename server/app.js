@@ -6,6 +6,8 @@ import { createAllTables } from "./controller/createAllTables.js";
 // import answerRouter from "./Routes/answerRouter.js";
 import questionRouter from "./Routes/questionRouter.js"; //Don't we need the extensions above too?
 
+
+
 const app = express();
 const port = process.env.PORT;
 
