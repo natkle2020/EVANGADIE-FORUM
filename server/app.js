@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import pool from './config/databaseConfig';
-import { createAllTables } from './controller/createAllTables';
-import userRouter from './Routes/userRouter';
-import answerRouter from './Routes/answerRouter';
-import questionRouter from './Routes/questionRouter'
+import pool from './config/databaseConfig.js';
+import { createAllTables } from './controller/createAllTables.js';
+// import userRouter from './Routes/userRouter.js';
+// import answerRouter from './Routes/answerRouter.js';
+// import questionRouter from './Routes/questionRouter.js'
 
 const app = express();
 const port = process.env.PORT;
@@ -15,9 +15,14 @@ app.use(cors());
 app.use(express.json());
 
 //API Routes
-app.use('api/auth', userRouter)
-app.use('/api/questions', questionRouter);
-app.use('/api/answers', answerRouter);
+// app.use('api/auth', userRouter)s
+// app.use('/api/questions', questionRouter);
+// app.use('/api/answers', answerRouter);
+
+app.get('/',(req,res,next)=>{
+  res.status(200).json({msg: 'Succusfully Configured'})
+})
+
 
 
 
@@ -59,7 +64,7 @@ const startServer = async () => {
 
        //Start Listening 
     const server = app.listen(port, () => {
-        console.log(`listening on ${port}`);
+        console.log(`listening on http://localhost:${port}`);
     });
 
     // Handle server startup errors

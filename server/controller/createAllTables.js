@@ -1,5 +1,5 @@
 import pool from "../config/databaseConfig.js";
-import {users, questions, answers, profiles} from '../schema/tables.js'
+import {users,profiles,questions,answers} from '../schema/table.js'
 
 
 
