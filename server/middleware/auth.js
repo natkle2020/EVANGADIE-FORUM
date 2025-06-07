@@ -1,45 +1,25 @@
+import { StatusCodes } from "http-status-codes";
+import jwt from "jsonwebtoken";
 
-// middleware/verifyToken.js
+async function authMiddleware(req, res, next) {
+  const authHeader = req.headers.authorization;
 
-const jwt = require("jsonwebtoken");
+  if (!authHeader || !authHeader.startsWith("Bearer")) {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: "Authentication invalid" });
+  }
+  const token = authHeader.split(" ")[1];
 
-const auth = (req, res, next) => {
-const authHeader = req.headers.authorization;
-
-  // 1. Check if authorization header exists and starts with "Bearer "
-
-if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({
-    error: "Unauthorized",
-    message: "Authentication invalid",
-    });
-}
-
-const token = authHeader.split(" ")[1];
-
-try {
-    // 2. Verify token using secret
-    
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-    // 3. Attach user info to request
-
-    req.user = {
-    userid: decoded.userid,
-    username: decoded.username,
-    };
-
-    // 4. Move to next middleware/route
-
+  try {
+    const { username, user_id } = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = { username, user_id };
     next();
-} catch (err) {
-    return res.status(401).json({
-    error: "Unauthorized",
-    message: "Authentication invalid",
-    });
+  } catch (error) {
+    return res
+      .status(StatusCodes.UNAUTHORIZED)
+      .json({ msg: "Authentication invalid" });
+  }
 }
-};
 
-module.exports = auth;
-
-
+export default authMiddleware;
