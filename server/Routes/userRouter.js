@@ -1,6 +1,6 @@
 import express from "express";
-import authMiddleware from "../middleware/auth";
-import { register, login, checkUser } from "../controller/userController";
+import authMiddleware from "../middleware/auth.js";
+import { register, login, checkUser } from "../controller/userController.js";
 
 const router = express.Router();
 
@@ -11,6 +11,6 @@ router.post("/register", register);
 router.post("/login", login);
 
 //check user
-router.get("/check", authMiddleware, checkUser);
+router.get("/checkUser", authMiddleware, checkUser);  //changed to checkUser for testing
 
 export default router;
