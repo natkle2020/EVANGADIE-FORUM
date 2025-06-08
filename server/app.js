@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 //API Routes
 app.use("/api/auth", userRouter);
-app.use("/api/question", questionRouter); 
+app.use("/api/questions", questionRouter); //changed to /api/questions for testing
 app.use("/api/answers", answerRouter);
 
 // ✅ Test DB Connection
