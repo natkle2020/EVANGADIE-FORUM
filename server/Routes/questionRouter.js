@@ -1,17 +1,13 @@
 import express from "express";
-import { auth } from "../middleware/auth.js";
-import {
-  askquestion,
-  getAllQuestions,
-  getSingleQuestion,
-} from "../controller/questionController.js";
+import authMiddleware from "../middleware/auth.js";
+import { askquestion, getAllQuestions, getSingleQuestion } from "../controller/answerController.js";
 
 const router = express.Router(); //create new router object
 
 // Insert question - Only logged-in users
-router.post("/", auth, askquestion);
+router.post("/", authMiddleware, askquestion);
 
-//bere
+
 //all question route
 router.get("/", getAllQuestions);
 
