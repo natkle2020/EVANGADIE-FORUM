@@ -11,6 +11,6 @@ router.post("/register", register);
 router.post("/login", login);
 
 //check user
-router.get("/check", authMiddleware, checkUser);
+router.get("/checkUser", authMiddleware, checkUser);  //changed to checkUser for testing
 
 export default router;

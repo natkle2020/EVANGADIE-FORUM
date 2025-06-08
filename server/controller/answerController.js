@@ -5,7 +5,8 @@ import pool from '../config/databaseConfig.js'
 //Kid post answer end point
 export async function postAnswer(req, res) {
 	// Validating of user(req.user) from JWT middleware
-	if (!req.user || !req.user.user_id) {
+    const {username, user_id} = req.user
+	if (!username || !user_id) {
 		return res.status(StatusCodes.UNAUTHORIZED).json({
 			success: false,
 			status: 401,
@@ -14,7 +15,7 @@ export async function postAnswer(req, res) {
 	}
     
 	// Get user ID from authenticated user (set by authMiddleware)
-	const userId = parseInt(req.user.user_id);
+	const userId = parseInt(user_id);
 	if (isNaN(userId)) {
 		return res.status(StatusCodes.BAD_REQUEST).json({
 			success: false,
@@ -123,16 +124,13 @@ export async function postAnswer(req, res) {
 //Abenezer Get answer endpoint
 export async function getAnswer(req,res){
      const { id } = req.params;
-     if(!id){
-          return res.status(StatusCodes.NOT_FOUND).json({ message: "Can't find answer for these questions" });
+     const qid = parseInt(id)
+     if(!qid || isNaN(qid)){
+          return res.status(StatusCodes.NOT_FOUND).json({success: false , status: "Error", message: "Can't find answer for this questions", error : "Invalid request parameter" });
         }
         const selectAnswer = `
                     SELECT 
-                        a.answer_id, 
-                        a.question_id,
-                        a.user_id,
-                        a.answer,
-                        a.time,
+                        a.*,
                         u.username
                     FROM answers a
                     JOIN users u ON a.user_id = u.user_id
@@ -142,12 +140,10 @@ export async function getAnswer(req,res){
 
         
         try {
-            const [answers] = await pool.query(selectAnswer,[id])
-            console.log(answers)
-            return res.status(StatusCodes.OK).json({ message: "Succusfully qeuried answers", Answer: answers });
+            const [answers] = await pool.execute(selectAnswer,[qid])
+            return res.status(StatusCodes.OK).json({success: true , message: "Successfully retrieved answers", Answer: answers });
         
     } catch (error) {
-        
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({success: false , message: 'Unable to retrieve answers', error: `Internal server error ${error.message}`});
     }
-    res.status(StatusCodes.OK).json({ message: 'Get answer'});
 } 
