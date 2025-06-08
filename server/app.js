@@ -1,45 +1,35 @@
-import express from 'express';
-import cors from 'cors';
-import pool from './config/databaseConfig.js';
-import { createAllTables } from './controller/createAllTables.js';
-import answerRouter from './Routes/answerRouter.js';
-// import userRouter from './Routes/userRouter.js';
-// import questionRouter from './Routes/questionRouter.js';
+import express from "express";
+import cors from "cors";
+import pool from "./config/databaseConfig.js";
+import { createAllTables } from "./controller/createAllTables.js";
+import userRouter from "./Routes/userRouter.js";
+import answerRouter from "./Routes/answerRouter.js";
+import questionRouter from "./Routes/questionRouter.js";
+
+
 const app = express();
 const port = process.env.PORT;
-
 
 // ✅ Middlewares
 app.use(cors());
 app.use(express.json());
 //API Routes
-app.use('/api/answer/',answerRouter)
-// app.use('api/auth', userRouter)
-// app.use('/api/questions', questionRouter);
+app.use("api/auth", userRouter);
+app.use("/api/question", questionRouter); 
+app.use("/api/answers", answerRouter);
 
-app.get('/',(req,res,next)=>{
-  res.status(200).json({msg: 'Succusfully Configured'})
-})
-
-
-
-
-
-// ✅ Test DB Connection 
+// ✅ Test DB Connection
 const testConnection = async () => {
- try {
-   const connection = await pool.getConnection();
+  try {
+    const connection = await pool.getConnection();
     console.log("✅ MySQL connected via pool!");
-    connection.release(); 
+    connection.release();
     return true;
   } catch (err) {
-    console.error("❌ MySQL error:", err);  //Logging the Whole Error object for debugging 
+    console.error("❌ MySQL error:", err); //Logging the Whole Error object for debugging
     return false;
   }
-}
-
-
-
+};
 
 // ✅ Start the server
 const startServer = async () => {
@@ -52,26 +42,38 @@ const startServer = async () => {
     }
   
     if (process.env.INIT_DB === 'true') {
+  console.log("🔄 Testing database connection...");
+  const isConnected = await testConnection();
+
+  if (!isConnected) {
+    console.error("Failed to connect to database. Exiting...");
+    process.exit(1); //Kills the app if database fails
+  }
+
+  if (process.env.INIT_DB === "true") {
     try {
       await createAllTables();
     } catch (err) {
       console.error("Failed to initialize tables. Exiting...");
       process.exit(1);
     }
-}
+  }
 
        //Start Listening 
     const server = app.listen(port, () => {
         console.log(`listening on http://localhost:${port}`);
     });
+  //Start Listening
+  const server = app.listen(port, () => {
+    console.log(`listening on ${port}`);
+  });
 
-    // Handle server startup errors
-    server.on('error', (err) => {
-        console.error('Server startup error:', err.message);
-        process.exit(1);
-    });
-}
-
+  // Handle server startup errors
+  server.on("error", (err) => {
+    console.error("Server startup error:", err.message);
+    process.exit(1);
+  });
+};
 
 // Start everything
 startServer();
