@@ -14,7 +14,7 @@ const port = process.env.PORT;
 app.use(cors());
 app.use(express.json());
 //API Routes
-app.use("api/auth", userRouter);
+app.use("/api/auth", userRouter);
 app.use("/api/question", questionRouter); 
 app.use("/api/answers", answerRouter);
 

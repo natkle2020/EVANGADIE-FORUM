@@ -39,7 +39,7 @@ export async function getAllQuestions(req, res) {
   try {
     const result = await pool.execute(`
       SELECT * FROM questions
-      ORDER BY id DESC
+      ORDER BY question_id DESC
       LIMIT 5
     `);
     console.log(result);

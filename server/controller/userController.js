@@ -99,5 +99,5 @@ async function checkUser(req, res) {
   res.status(StatusCodes.OK).json({ msg: "valid user", username, user_id });
 }
 
-export default { register, login, checkUser };
+export  { register, login, checkUser };
 
