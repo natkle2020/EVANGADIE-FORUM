@@ -2,10 +2,9 @@ import express from 'express';
 import cors from 'cors';
 import pool from './config/databaseConfig.js';
 import { createAllTables } from './controller/createAllTables.js';
+import answerRouter from './Routes/answerRouter.js';
 // import userRouter from './Routes/userRouter.js';
-// import answerRouter from './Routes/answerRouter.js';
-// import questionRouter from './Routes/questionRouter.js'
-
+// import questionRouter from './Routes/questionRouter.js';
 const app = express();
 const port = process.env.PORT;
 
@@ -13,11 +12,10 @@ const port = process.env.PORT;
 // ✅ Middlewares
 app.use(cors());
 app.use(express.json());
-
 //API Routes
-// app.use('api/auth', userRouter)s
+app.use('/api/answer/',answerRouter)
+// app.use('api/auth', userRouter)
 // app.use('/api/questions', questionRouter);
-// app.use('/api/answers', answerRouter);
 
 app.get('/',(req,res,next)=>{
   res.status(200).json({msg: 'Succusfully Configured'})
@@ -52,7 +50,7 @@ const startServer = async () => {
         console.error("Failed to connect to database. Exiting...");
         process.exit(1); //Kills the app if database fails
     }
-
+  
     if (process.env.INIT_DB === 'true') {
     try {
       await createAllTables();
