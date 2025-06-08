@@ -13,7 +13,6 @@ const port = process.env.PORT;
 // ✅ Middlewares
 app.use(cors());
 app.use(express.json());
-
 //API Routes
 app.use("api/auth", userRouter);
 app.use("/api/question", questionRouter); 
@@ -34,9 +33,9 @@ const testConnection = async () => {
 
 // ✅ Start the server
 const startServer = async () => {
-  console.log("🔄 Testing database connection...");
-  const isConnected = await testConnection();
-
+    console.log("🔄 Testing database connection...");
+    const isConnected = await testConnection();
+    
   if (!isConnected) {
     console.error("Failed to connect to database. Exiting...");
     process.exit(1); //Kills the app if database fails

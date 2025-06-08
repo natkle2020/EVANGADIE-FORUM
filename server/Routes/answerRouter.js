@@ -11,3 +11,5 @@ router.post('/', authMiddleware, postAnswer);
 
 //public route to get answer
 router.get('/:id', getAnswersByQuestionId)
+
+export default router;

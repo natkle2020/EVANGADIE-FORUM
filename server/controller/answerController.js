@@ -1,43 +1,8 @@
-import pool from "../config/databaseConfig.js";
-
-export const getAnswersByQuestionId = async (req, res) => {
-    const questionId = parseInt(req.params.question_id);
-
-    if (isNaN(questionId)) {
-        return res.status(400).json({
-            error: "Bad Request",
-            message: "Invalid question_id parameter",
-        });
-    }
-
-    const query = `
-    SELECT a.answer_id, a.content, u.user_name, a.created_at
-    FROM answers a
-    JOIN users u ON a.user_id = u.user_id
-    WHERE a.question_id = ?
-  `;
-
-    try {
-        const [results] = await pool.query(query, [questionId]);
-        if (results.length === 0) {
-            return res.status(404).json({
-                error: "Not Found",
-                message: "The requested question could not be found.",
-            });
-        }
-        res.status(200).json({ answers: results });
-    } catch (err) {
-        console.error("Error fetching answers:", err);
-        return res.status(500).json({
-            error: "Internal Server Error",
-            message: "An unexpected error occurred.",
-        });
-    }
-};
+import {StatusCodes} from 'http-status-codes'
+import pool from '../config/databaseConfig.js'
 
 
-
-//post
+//Kid post answer end point
 export async function postAnswer(req, res) {
 	// Validating of user(req.user) from JWT middleware
 	if (!req.user || !req.user.user_id) {
@@ -111,7 +76,7 @@ export async function postAnswer(req, res) {
 	try {
         //Checking if the question Exists
         const query = `SELECT question_id FROM questions WHERE question_id = ?`;
-        const [questionCheck] = await connection.execute(query, [questionId]);
+        const [questionCheck] = await pool.execute(query, [questionId]);
 
         // console.log(questionCheck);
 
@@ -127,7 +92,7 @@ export async function postAnswer(req, res) {
         // Insert new answer into database
         const insertQuery = `INSERT INTO answers (question_id, user_id, answer) VALUES (?, ?, ?)`;
 
-        const [rows] = await connection.execute(insertQuery, [questionId, userId, answer]);
+        const [rows] = await pool.execute(insertQuery, [questionId, userId, answer]);
 
         
 
@@ -153,3 +118,36 @@ export async function postAnswer(req, res) {
 		});
 	}
 }
+
+
+//Abenezer Get answer endpoint
+export async function getAnswer(req,res){
+     const { id } = req.params;
+     if(!id){
+          return res.status(StatusCodes.NOT_FOUND).json({ message: "Can't find answer for these questions" });
+        }
+        const selectAnswer = `
+                    SELECT 
+                        a.answer_id, 
+                        a.question_id,
+                        a.user_id,
+                        a.answer,
+                        a.time,
+                        u.username
+                    FROM answers a
+                    JOIN users u ON a.user_id = u.user_id
+                    WHERE a.question_id = ?
+                    ORDER BY a.time DESC
+                    `;
+
+        
+        try {
+            const [answers] = await pool.query(selectAnswer,[id])
+            console.log(answers)
+            return res.status(StatusCodes.OK).json({ message: "Succusfully qeuried answers", Answer: answers });
+        
+    } catch (error) {
+        
+    }
+    res.status(StatusCodes.OK).json({ message: 'Get answer'});
+} 
