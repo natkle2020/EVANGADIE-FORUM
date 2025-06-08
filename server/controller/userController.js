@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-export const answerinfo = (req, res) => {
-	res.send("answerinfo");
-};
-=======
 import pool from "../config/databaseConfig.js";
 import bcrypt from "bcrypt";
 import { StatusCodes } from "http-status-codes";
@@ -105,4 +100,4 @@ async function checkUser(req, res) {
 }
 
 export default { register, login, checkUser };
->>>>>>> main
+
