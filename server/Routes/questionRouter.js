@@ -1,5 +1,5 @@
 import express from "express";
-import { auth } from "../middleware/auth.js";
+import authMiddleware from "../middleware/auth.js";
 import {
   askquestion,
   getAllQuestions,
@@ -9,7 +9,7 @@ import {
 const router = express.Router(); //create new router object
 
 // Insert question - Only logged-in users
-router.post("/", auth, askquestion);
+router.post("/", authMiddleware, askquestion);
 
 //bere
 //all question route

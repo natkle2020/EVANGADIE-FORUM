@@ -36,15 +36,6 @@ const startServer = async () => {
     console.log("🔄 Testing database connection...");
     const isConnected = await testConnection();
     
-    if (!isConnected) {
-        console.error("Failed to connect to database. Exiting...");
-        process.exit(1); //Kills the app if database fails
-    }
-  
-    if (process.env.INIT_DB === 'true') {
-  console.log("🔄 Testing database connection...");
-  const isConnected = await testConnection();
-
   if (!isConnected) {
     console.error("Failed to connect to database. Exiting...");
     process.exit(1); //Kills the app if database fails
@@ -59,10 +50,6 @@ const startServer = async () => {
     }
   }
 
-       //Start Listening 
-    const server = app.listen(port, () => {
-        console.log(`listening on http://localhost:${port}`);
-    });
   //Start Listening
   const server = app.listen(port, () => {
     console.log(`listening on ${port}`);

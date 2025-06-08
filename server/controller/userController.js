@@ -100,3 +100,4 @@ async function checkUser(req, res) {
 }
 
 export default { register, login, checkUser };
+
