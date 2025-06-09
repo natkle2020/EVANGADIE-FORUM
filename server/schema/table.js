@@ -14,11 +14,11 @@ export let profiles = `CREATE TABLE IF NOT EXISTS profiles(
     user_id INT NOT NULL UNIQUE,
     profile_picture VARCHAR(255),
     phone VARCHAR(20),
-   date_of_birth DATE,
-   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    date_of_birth DATE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY(user_profile_id),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
+    FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE
 )`;
 
 export let questions = `CREATE TABLE IF NOT EXISTS questions(
@@ -40,6 +40,7 @@ export let answers = `CREATE TABLE IF NOT EXISTS answers(
     user_id INT NOT NULL,
     answer TEXT NOT NULL,
     PRIMARY KEY(answer_id),
+    time TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (question_id) REFERENCES questions(question_id) ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE ON UPDATE CASCADE,
     INDEX idx_user_id (user_id)
