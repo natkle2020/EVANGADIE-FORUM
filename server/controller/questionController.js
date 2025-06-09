@@ -1,8 +1,6 @@
 
 import pool from "../config/databaseConfig.js"; // DB connection
 import { StatusCodes } from "http-status-codes";
-
-
 // Insert the question into the database
 export async function askquestion(req, res) {
   const { title, question, description, tag } = req.body;
