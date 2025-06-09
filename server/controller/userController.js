@@ -92,7 +92,7 @@ async function login(req, res) {
   }
 }
 
-async function checkUser(req, res) {
+export async function checkUser(req, res) {
   const username = req.user.username;
   const user_id = req.user.user_id;
 
