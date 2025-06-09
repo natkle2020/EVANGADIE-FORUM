@@ -2,12 +2,16 @@ import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
 
 async function authMiddleware(req, res, next) {
-  const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization; 
 
   if (!authHeader || !authHeader.startsWith("Bearer")) {
     return res
       .status(StatusCodes.UNAUTHORIZED)
-      .json({ msg: "Authentication invalid" });
+      .json({
+
+         msg: "Authentication invalid",
+         error: 'Access Denied. No Token Provided'
+         });
   }
   const token = authHeader.split(" ")[1];
 
@@ -16,9 +20,16 @@ async function authMiddleware(req, res, next) {
     req.user = { username, user_id };
     next();
   } catch (error) {
+
+    console.error('Token Verification error:', error.message);
     return res
       .status(StatusCodes.UNAUTHORIZED)
-      .json({ msg: "Authentication invalid" });
+      .json({
+        status: false,
+        msg: "Authentication invalid",
+        error: "Invalid Token"
+    
+    });
   }
 }
 

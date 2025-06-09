@@ -8,13 +8,15 @@ import {
 
 const router = express.Router(); //create new router object
 
+
 // Insert question - Only logged-in users
 router.post("/", authMiddleware, askquestion);
 
-//bere
-//all question route
-router.get("/", getAllQuestions);
 
-router.get("/:question_id", getSingleQuestion);
+//all question route
+router.get("/", authMiddleware, getAllQuestions);
+
+//get a question by id
+router.get("/:question_id",authMiddleware, getSingleQuestion);
 export default router;
 
