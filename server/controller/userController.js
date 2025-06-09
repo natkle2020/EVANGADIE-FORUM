@@ -135,11 +135,41 @@ export async function login(req, res) {
 }
 
 export async function checkUser(req, res) {
-  const username = req.user.username;
-  const user_id = req.user.user_id;
+  
 
-  res.status(StatusCodes.OK).json({ msg: "valid user", username, user_id });
+   
+        // req.user comes from JWT middleware(req.user)
+        const userId = req.user.user_id;
+
+        try{
+
+        const [users] = await connection.execute(
+            'SELECT user_id, username, first_name, last_name, email FROM users WHERE user_id = ?',
+            [userId]
+        );
+
+        if (users.length === 0) {
+            console.warn(`User with ID ${userId} not found in DB`);
+            return res.status(StatusCodes.NOT_FOUND).json({
+                 success: false,
+                 status: 404,
+                error: "User not found"
+            });
+        }
+
+        res.status(StatusCodes.OK).json({
+            success: true,
+            status: 200,
+            message: "User profile retrieved successfully",
+            user: users[0]
+        });
+
+    } catch (error) {
+        console.error('Get profile error:', error.message);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+            success: false,
+            status: 500,
+            error: "Failed to get user profile"
+        });
 }
-
- 
-
+}
