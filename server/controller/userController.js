@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
 
+
+//Register
 export async function register(req, res) {
   const { username, first_name, last_name, email, password } = req.body;
 
@@ -60,6 +62,8 @@ export async function register(req, res) {
   }
 }
 
+
+//Login
 export async function login(req, res) {
 
   const { email, password } = req.body;
@@ -134,6 +138,8 @@ export async function login(req, res) {
   }
 }
 
+
+//CheckUser
 export async function checkUser(req, res) {
   
 
