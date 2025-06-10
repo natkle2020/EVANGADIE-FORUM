@@ -2,7 +2,7 @@ import {StatusCodes} from 'http-status-codes'
 import pool from '../config/databaseConfig.js'
 
 
-//Kid post answer end point
+//post answer
 export async function postAnswer(req, res) {
 	// Validating of user(req.user) from JWT middleware
     const {username, user_id} = req.user
@@ -121,7 +121,7 @@ export async function postAnswer(req, res) {
 }
 
 
-//Abenezer Get answer endpoint
+//Get answer 
 export async function getAnswer(req,res){
      const { id } = req.params;
      const qid = parseInt(id)
