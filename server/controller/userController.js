@@ -153,6 +153,7 @@ export async function checkUser(req, res) {
             'SELECT user_id, username, first_name, last_name, email FROM users WHERE user_id = ?',
             [userId]
         );
+        console.log(users[0])
 
         if (users.length === 0) {
             console.warn(`User with ID ${userId} not found in DB`);
