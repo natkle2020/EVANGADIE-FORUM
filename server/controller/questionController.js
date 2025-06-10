@@ -20,6 +20,7 @@ export async function askquestion(req, res) {
        });
   }
 
+
   try {
     const timestamp = new Date();
 
@@ -36,7 +37,7 @@ export async function askquestion(req, res) {
         success: true,
         status: 201,
         question_id: result[0].insertId,
-        msg: "Question posted successfully!"
+        msg: "Question posted successfully!" 
        });
 
        console.log(`Question with ID: ${result[0].insertId}posted `)
@@ -90,7 +91,7 @@ export async function getAllQuestions(req, res) {
   }
 }
 
-//get question by id 
+//get question by 
 export const getSingleQuestion = async (req, res) => {
     const { question_id } = req.params;
     const questionIdNum = Number(question_id);

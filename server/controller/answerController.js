@@ -56,7 +56,7 @@ export async function postAnswer(req, res) {
 
 
         // Validating answer length (here answers can be longer than questions)
-        if (answer.length < 10) {
+        if (answer.length < 5) {
             return res.status(StatusCodes.BAD_REQUEST).json({
                 success: false,
                 status: 400,

@@ -72,7 +72,7 @@ export async function login(req, res) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({ 
-        msg: "please enter all rquired fields",
+        msg: "please enter all required fields",
         error: 'Email and Password are Required'
        });
   }
@@ -131,7 +131,7 @@ export async function login(req, res) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ 
-        sucess: false,
+        success: false,
         msg: "something went wrong, try again later!" ,
         error: `Login Failed. Please Try again Later ${error.message}`,
       });
@@ -149,7 +149,7 @@ export async function checkUser(req, res) {
 
         try{
 
-        const [users] = await connection.execute(
+        const [users] = await pool.execute(
             'SELECT user_id, username, first_name, last_name, email FROM users WHERE user_id = ?',
             [userId]
         );
