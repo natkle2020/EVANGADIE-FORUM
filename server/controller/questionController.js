@@ -3,7 +3,7 @@ import pool from "../config/databaseConfig.js"; // DB connection
 import { StatusCodes } from "http-status-codes";
 
 
-// Insert the question into the database
+// post question into the database
 export async function askquestion(req, res) {
   const { title, question, description, tag } = req.body;
   const userId = req.user.user_id;
@@ -90,7 +90,7 @@ export async function getAllQuestions(req, res) {
   }
 }
 
-//helen & 
+//get question by id 
 export const getSingleQuestion = async (req, res) => {
     const { question_id } = req.params;
     const questionIdNum = Number(question_id);

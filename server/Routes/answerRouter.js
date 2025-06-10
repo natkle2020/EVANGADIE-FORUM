@@ -10,6 +10,6 @@ const router = express.Router();
 router.post('/', authMiddleware, postAnswer);
 
 //public route to get answer
-router.get('/:id', getAnswer)
+router.get('/:id', authMiddleware, getAnswer)
 
 export default router;
