@@ -1,0 +1,142 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+
+.login_container {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px;
+    border:2px solid rgb(250, 248, 248);
+    padding: 30px;
+    margin:50px auto;
+}
+
+.login_container h3 {
+    font-size: 17px;
+    margin-top: 70px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #5d5f67;
+}
+
+
+.login_container h5 {
+    font-size: 12px;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #5d5f67;
+    
+}
+
+
+.login_container form input {
+    padding: 8px 20px;
+    background-color: white;
+    width: 100%;
+    border: none;
+    border: 1px solid rgb(170, 167, 167);
+    border-radius: 3px;
+}
+
+.forgot_password {
+    margin-top: 10px;
+    font-size: 14px;
+    color:#0a58ca;
+    padding-left:300px;
+    
+}
+
+.forgot_password:hover {
+    color:#fe8302;
+}
+
+.login_container button {
+    border: none;
+    background: #fe8302;
+    border-radius: 5px;
+    width: 25%;
+    height:40px;
+    margin-top: 10px;
+    cursor: pointer;
+    text-align: center;
+    color: wheat;
+    margin-bottom: 15px;
+    align-content: center;
+    vertical-align: middle;
+    margin-left: 160px;
+    margin-right: 160px;
+    
+}
+
+.login_container button:hover {
+    border: 2px solid #0a58ca;
+}
+
+
+.register {
+    font-size: 12px;
+    text-align:center;
+    align-content:center;
+    margin-bottom: 70px; 
+    color: #f2b977;
+   
+}
+
+.register:hover {
+    color: #0a58ca;
+   
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    border-radius: 7px;
+    border:2px solid rgb(250, 248, 248);
+    padding: 2rem;
+    text-align: center;
+    max-width: 400px;
+    margin: 70px auto 0 ;
+
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 1rem;
+  }
+  
+  .description {
+    font-size: 14px;
+    margin-bottom: 1.5rem;
+    color: #666;
+  }
+  
+  .input {
+    padding: 10px;
+    width: 100%;
+    max-width: 300px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .button {
+    margin-top: 1rem;
+    padding: 10px 20px;
+    background-color: #fe8302;
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .button:hover {
+    background-color: #007bff;
+  }
+
