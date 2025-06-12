@@ -1,12 +1,12 @@
 import { StatusCodes } from "http-status-codes";
 import pool from "../config/databaseConfig.js"; // DB connection
 
-// post question into the database
+// post question into the database/questions submissions/
 export async function askquestion(req, res) {
   const { title, question, description, tag } = req.body;
   const userId = req.user.user_id;
 
-
+  // Validates input: if required fields are missing, it sends back a 400 Bad Request error.
   if (!title || !question || !description) {
     return res
       .status(StatusCodes.BAD_REQUEST)
