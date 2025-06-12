@@ -1,0 +1,63 @@
+  body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #333;
+      padding: 18px 30px;
+      color: white;
+      
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      
+    
+    }
+
+    .sign-in-button {
+      background-color: #5aa5e7;
+      border: none;
+      color: white;
+      padding: 16px 16px;
+      cursor: pointer;
+      border-radius:10px;
+      font-size: 14px;
+    }
+   
+
+    .container {
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .how-it-works-button {
+      display:block ;
+      margin: 30px auto 0;
+      padding: 12px 24px;
+      background-color: #f5daa0;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 30px;
+      
+    }
+
+    .how-it-works-button:hover {
+      background-color: pink
+
+    }
+
