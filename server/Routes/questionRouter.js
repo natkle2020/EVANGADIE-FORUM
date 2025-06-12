@@ -1,10 +1,11 @@
-import express from "express";
-import authMiddleware from "../middleware/auth.js";
 import {
   askquestion,
   getAllQuestions,
   getSingleQuestion,
 } from "../controller/questionController.js";
+
+import authMiddleware from "../middleware/auth.js";
+import express from "express";
 
 const router = express.Router(); //create new router object
 
