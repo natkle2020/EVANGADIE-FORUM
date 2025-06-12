@@ -1,6 +1,6 @@
-import "../../Components/Footer/Footer.module.css";
-import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
- import  logo from "../../../assets/logo2.png";
+import "../../Components/Footer/Footer.css";
+// import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa";
+//  import  logo from "../../../assets/logo2.png";
  
 
 
@@ -10,12 +10,12 @@ function Footer() {
       <div className="footer-container">
         {/* Logo and Social */}
         <div className="footer-section logo-social">
-          <img src={logo} alt="Evangadi Logo" className="footer-logo" />
-          <div className="social-icons">
+          {/* <img src={logo} alt="Evangadi Logo" className="footer-logo" /> */}
+          {/* <div className="social-icons">
             <a href="#"><FaFacebookF /></a>
             <a href="#"><FaInstagram /></a>
             <a href="#"><FaYoutube /></a>
-          </div>
+          </div> */}
         </div>
 
         {/* Useful Links */}
