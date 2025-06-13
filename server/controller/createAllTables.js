@@ -1,5 +1,5 @@
 import pool from "../config/databaseConfig.js";
-import {users, questions, answers, profiles} from '../schema/table.js'
+import {users, questions, answers, question_views, likes} from '../schema/table.js'
 
 
 
@@ -31,8 +31,8 @@ export const createAllTables = async () => {
         await createTableIfNotExists('users', users);
         await createTableIfNotExists('questions', questions);
         await createTableIfNotExists('answers', answers);
-        await createTableIfNotExists('profiles', profiles);
-  
+        await createTableIfNotExists('question_views', question_views);
+        await createTableIfNotExists('likes', likes);
 
         console.log("✅ Database tables initialized!");
 

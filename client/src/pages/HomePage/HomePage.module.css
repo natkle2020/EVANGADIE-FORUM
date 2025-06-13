@@ -46,6 +46,7 @@
     border: none;
     padding: 7px  30px ;
     border-radius: 6px;
+    cursor: pointer;
 }
 .single{
     display: grid;
