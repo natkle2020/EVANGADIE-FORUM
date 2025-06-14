@@ -1,11 +1,8 @@
-import React from 'react'
-
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AskQuestion from "./pages/AskQuestion/AskQuestion";
 const App = () => {
-  return (
-    <>
-      
-    </>
-  )
-}
+  return <></>;
+};
 
-export default App
+export default App;
