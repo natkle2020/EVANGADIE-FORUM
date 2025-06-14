@@ -9,7 +9,7 @@ const QuestionItem = ({ question }) => {
       <div className={styles.card}>
         <div className={styles.avatarSection}>
           <img
-            src={`https://api.dicebear.com/8.x/identicon/svg?seed=${question.username}`}
+            src={`https://api.dicebear.com/8.x/identicon/svg?seed=${question.username}`} //******for free unique avatars based on user name */
             alt="avatar"
             className={styles.avatar}
           />

@@ -10,10 +10,9 @@ const QuestionsList = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const res = await axiosInstance.get("/questions/"); //check -s with app.js
-        setQuestions(res.data);
-        console.log(res.data);
-        console.log(questions);
+        const res = await axiosInstance.get("/questions/"); 
+        setQuestions(res.data.data);
+        console.log("res.data:", res.data);
       } catch (err) {
         console.error("Error fetching questions:", err);
       } finally {
