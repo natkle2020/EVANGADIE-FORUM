@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import {Route, Routes, useNavigate} from 'react-router-dom'
 import HomePage from './Pages/HomePage/HomePage'
-import AuthPage from './Pages/Auth/AuthPage'
+import AuthPage from './pages/Auth/AuthPage'
 import Header from './Components/Header/Header'
 import Footer from './Components/Footer/Footer'
 import Answer from './Pages/Answer/Answer'

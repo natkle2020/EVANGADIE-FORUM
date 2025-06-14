@@ -1,7 +1,7 @@
 import React from "react";
 import {useNavigate} from 'react-router-dom'
 import evangadi_logo from '../../assets/evangadi-logo.png'
-import styles from "./Header.module.css";
+import styles from './Header.module.css'
 import {Link} from 'react-router-dom'
 import { FaUserCircle } from 'react-icons/fa'
 import { useContext } from "react";

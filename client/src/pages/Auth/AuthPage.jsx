@@ -50,6 +50,7 @@ async function login(e) {
     const result = await axios.post('/auth/login', {
       email : emailLoginRef.current.value,
       password : passwordLoginRef.current.value })
+      
     const token = result?.data?.token
     const username = result?.data?.user.username
     const user_id = result?.data?.user?.user_id
@@ -83,7 +84,8 @@ function toggler(e){
     <div className={styles.login}>
 
       {
-        islogin ?  <div className={styles.formCard}>
+        islogin ? (
+           <div className={styles.formCard}>
         <h3>Login to your account</h3>
         <p className={styles.registerText}>
           Don’t have an account? <a href="#" onClick={toggler}>Create a new account</a>
@@ -99,7 +101,8 @@ function toggler(e){
         </form>
         <Link className={styles.createAccount} href="#" onClick={toggler}>Create an account?</Link>
        
-      </div> : 
+      </div>
+        ) : 
        <div className={styles.formCard}>        
         <h3>Create account</h3>
         <p className={styles.registerText}>

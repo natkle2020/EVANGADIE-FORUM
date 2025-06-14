@@ -43,7 +43,6 @@ function Answer() {
                 }
             )
             answerRef.current.value = ''
-            alert(ansewrPosted.data.message)
         } catch (error) {
             console.log(error)
         }
