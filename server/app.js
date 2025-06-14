@@ -18,6 +18,9 @@ app.use("/api/auth", userRouter);
 app.use("/api/questions", questionRouter); //changed to /api/questions for testing
 app.use("/api/answers", answerRouter);
 
+
+
+
 // ✅ Test DB Connection
 const testConnection = async () => {
   try {
@@ -40,10 +43,9 @@ const startServer = async () => {
     console.error("Failed to connect to database. Exiting...");
     process.exit(1); //Kills the app if database fails
   }
-
   if (process.env.INIT_DB === "true") {
     try {
-      await createAllTables();
+      createAllTables();
     } catch (err) {
       console.error("Failed to initialize tables. Exiting...");
       process.exit(1);

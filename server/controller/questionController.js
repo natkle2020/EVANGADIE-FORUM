@@ -1,15 +1,13 @@
-
-import pool from "../config/databaseConfig.js"; // DB connection
 import { StatusCodes } from "http-status-codes";
+import pool from "../config/databaseConfig.js"; // DB connection
 
-
-// post question into the database
+// post question into the database/questions submissions/
 export async function askquestion(req, res) {
-  const { title, question, description, tag } = req.body;
+  const { title, description, tag } = req.body;
   const userId = req.user.user_id;
 
-
-  if (!title || !question || !description) {
+  // Validates input: if required fields are missing, it sends back a 400 Bad Request error.
+  if (!title || !description) {
     return res
       .status(StatusCodes.BAD_REQUEST)
       .json({
@@ -21,11 +19,9 @@ export async function askquestion(req, res) {
   }
 
   try {
-    const timestamp = new Date();
-
     const result = await pool.execute(
-      "INSERT INTO questions (user_id, title, question, description, tag, time) VALUES (?, ?, ?, ?, ?, ?)",
-      [userId, title, question, description, tag || null, timestamp]
+      "INSERT INTO questions (user_id, title, description, tag) VALUES (?, ?, ?, ?)",
+      [userId, title, description, tag || null]
     );
 
 
@@ -39,8 +35,6 @@ export async function askquestion(req, res) {
         msg: "Question posted successfully!"
        });
 
-       console.log(`Question with ID: ${result[0].insertId}posted `)
-
 
   } catch (error) {
     console.error(error);
@@ -53,7 +47,7 @@ export async function askquestion(req, res) {
   }
 }
 
-//all-question
+
 export async function getAllQuestions(req, res) {
   try {
     const [rows] = await pool.execute(`
@@ -90,79 +84,38 @@ export async function getAllQuestions(req, res) {
   }
 }
 
-//get question by id 
-export const getSingleQuestion = async (req, res) => {
+export const getSingleQuestion = async(req,res)=>{
+
     const { question_id } = req.params;
-    const questionIdNum = Number(question_id);
-  
-    // Validate question_id
-    if (!Number.isInteger(questionIdNum) || questionIdNum <= 0) {
-      return res.status(400).json({
-        success: false,
-        status: 400,
-        message: "Invalid question ID" });
-    }
-  
-    // SQL to get question with asker info
+    
     const questionQuery = `
-      SELECT
-        q.*,
-        u.username AS asked_by_username,
-        u.first_name AS asked_by_first_name,
-        u.last_name AS asked_by_last_name
-      FROM questions q
-      JOIN users u ON q.user_id = u.user_id
-      WHERE q.question_id = ?
-    `;
-  
-    try {
-      const [questionRows] = await pool.query(questionQuery, [questionIdNum]);
+  SELECT q.*, u.username, u.first_name , u.last_name
+  FROM questions q
+  JOIN users u ON q.user_id = u.user_id
+  WHERE q.question_id = ?
+`;
 
-      console.log(questionRows[0])
-  
-      if (questionRows.length === 0) {
-        return res.status(StatusCodes.NOT_FOUND).json({
-          success: false,
-          status: 404,
-          error: "not found",
-          message: "Question not found" });
-      }
-  
-      const [row] = questionRows;
-  
-      const question = {
-        question_id: row.question_id,
-        title: row.title,
-        question: row.question,
-        description: row.description,
-        tag: row.tag,
-        time: new Date(row.time).toISOString(),
-        asked_by: {
-        username: row.asked_by_username,
-        first_name: row.asked_by_first_name,
-        last_name: row.asked_by_last_name,
-        },
-      };
-  
-      res.status(StatusCodes.OK).json({
-        success: true,
-        status: 200,
-        message: "Question retrieved successfully",
-        question: question
-      });
+try {
+  const [result] = await pool.execute(questionQuery, [question_id]);
 
-      console.log(`Retrieved question ${question_id}`);
+  if (result.length === 0) {
+    return res.status(StatusCodes.BAD_REQUEST).json({ success: false, status: 404, error: "not found", message: "Question not found" });
+  }
+  const [data] = result
 
 
+  res.status(StatusCodes.OK).json({ success: true, status: 200, message: "Question queried successfully", question :   {question_id: data.question_id,
+    title: data.title,
+    description: data.description,
+    tag: data.tag,
+    time: new Date(data.time).toISOString(),
+    username: data.username,
+    first_name: data.first_name,
+    last_name: data.last_name} });
 
-    } catch (error) {
-      console.error("Error fetching question:", error.message);
-      res
-        .status(StatusCodes.INTERNAL_SERVER_ERROR)
-        .json({
-          success: false,
-          status: 500,
-          error: "Failed to retrieve question. Please try again later.",
-        });
-    }
-  };
+} catch (error) {
+  console.error("Error fetching question:", error.message);
+  res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ success: false, status: 500, error: "Unable to query question. Internal Server Error"});
+}
+
+  }
