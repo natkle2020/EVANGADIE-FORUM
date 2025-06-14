@@ -1,9 +1,13 @@
 import React from 'react'
+import Router from './Router'
+import ContextProvider from './Components/Context'
 
-const App = () => {
+function App() {
   return (
     <>
-      
+    <ContextProvider>
+      <Router/>
+    </ContextProvider>
     </>
   )
 }
