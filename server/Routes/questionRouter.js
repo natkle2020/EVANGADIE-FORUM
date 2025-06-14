@@ -12,7 +12,6 @@ const router = express.Router(); //create new router object
 // Insert question - Only logged-in users
 router.post("/", authMiddleware, askquestion);
 
-
 //all question route
 router.get("/", authMiddleware, getAllQuestions);
 
