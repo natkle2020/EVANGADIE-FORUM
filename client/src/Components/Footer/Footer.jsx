@@ -54,7 +54,7 @@ const Footer = () => {
             <div className={styles.footerLinks}>
               <h4>Useful Link</h4>
               <ul>
-                <li><Link to ="/about">How it works</Link></li>
+                <li><Link to ="/howitwork">How it works</Link></li>
                 <li><Link to ="https://www.evangadi.com/legal/terms/">Terms of Service</Link></li>
                 <li><Link to ="https://www.evangadi.com/legal/privacy/">Privacy policy</Link></li>
               </ul>

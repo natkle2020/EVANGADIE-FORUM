@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import axios from '../../utils/axios'
 import classes from './Answer.module.css'
 import { useParams } from 'react-router-dom'
-import { timeAgo } from '../../utils/formatter'
+// import { timeAgo } from '../../utils/formatter'
 
 function Answer() {
     const {qid} =useParams()
@@ -28,11 +28,13 @@ function Answer() {
         })()
        
     },[postAnswer])
+
+
    async function postAnswer(e) {
         e.preventDefault()
         const answerValue = answerRef.current.value
         if(answerValue.length < 5){
-           return alert('Please enter atleast 6 character')
+           return alert('Please enter at least 6 character')
         }
         try {
            const ansewrPosted = await axios.post('/answers', {
@@ -47,6 +49,7 @@ function Answer() {
             console.log(error)
         }
    }
+
   return (
     <div className={classes.main_container}>
         <div className={classes.container}>

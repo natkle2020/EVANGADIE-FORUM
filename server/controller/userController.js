@@ -49,7 +49,9 @@ export async function register(req, res) {
       "INSERT INTO users (username, first_name, last_name, email, password) VALUES (?,?,?,?,?)",
       [username, first_name, last_name, email, hashedPassword]
     );
+
     return res.status(StatusCodes.CREATED).json({ msg: "user created" });
+    
   } catch (error) {
 
     console.log(error.message);
