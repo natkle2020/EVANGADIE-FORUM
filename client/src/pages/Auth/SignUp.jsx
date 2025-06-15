@@ -8,6 +8,7 @@ function SignUp({toggler}) {
   const [status, setStatus] = useState({ message: "", type: "" });
   const [loading, setLoading] = useState();
 
+
   const emailRef = useRef();
   const passwordRef = useRef(null);
   const first_nameRef = useRef(null);
@@ -69,7 +70,12 @@ function SignUp({toggler}) {
       if (result.data?.success) {
         showStatus("User registered successfully", "success");
 
-        setTimeout(() => toggler(e), 1000);
+        // Navigating to login after 1.5 seconds
+        setTimeout(() => {
+          setStatus({ message: "", type: "" });
+          toggler(e);
+        }, 1500);
+
       } else {
         showStatus(
           result.data?.error || "Registration failed. Please try again later."

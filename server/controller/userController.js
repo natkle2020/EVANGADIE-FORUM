@@ -50,7 +50,11 @@ export async function register(req, res) {
       [username, first_name, last_name, email, hashedPassword]
     );
 
-    return res.status(StatusCodes.CREATED).json({ msg: "user created" });
+    return res.status(StatusCodes.CREATED).json({
+      success: true,
+      status: 201,
+      msg: "user created" 
+    });
     
   } catch (error) {
 
@@ -58,6 +62,7 @@ export async function register(req, res) {
     return res
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
       .json({ 
+        success: false,
         msg: "something went wrong, try again later!",
         error: 'Registration Failed. Please Try Again'
       });

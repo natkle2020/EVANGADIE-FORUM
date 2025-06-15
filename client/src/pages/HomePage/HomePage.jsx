@@ -5,11 +5,13 @@ import { useContext } from "react";
 import { Context } from "../../Components/Context";
 import { Link } from "react-router-dom";
 import { timeAgo } from "../../utils/formatter";
+import { Button, Spinner } from "react-bootstrap";
 function HomePage() {
   const [questions, setQuestions] = useState([]);
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
-  const [{ user }, dispatch] = useContext(Context);
+  const [displayedQuestions, setDisplayedQuestions] = useState(5);
+   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -21,11 +23,42 @@ function HomePage() {
         setQuestions(response?.data?.data);
       } catch (error) {
         console.log(error);
+      }finally{
+        setLoading(false);
       }
     })();
   }, []);
 
-  
+
+  //handling see more
+  const seeMore = () => {
+    setDisplayedQuestions((prevCount) => prevCount + 5); //Show the next 5
+  };
+
+  const seeLess = () => {
+    setDisplayedQuestions(5);
+    // Scroll to top when showing less
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  // Get the questions to display based on the current limit
+  const questionsToShow = questions.slice(0, displayedQuestions);
+
+
+
+
+  if (loading) {
+    return (
+      <div className={classes.loadingContainer}>
+        <Spinner animation="border" variant="warning" >
+          {/* <p>Loading questions...</p> */}
+        </Spinner>
+      
+      </div>
+    );
+  }
+
+
   return (
     <div className={classes.homepage}>
       <div className={classes.head}>
@@ -44,7 +77,7 @@ function HomePage() {
         <h2>Questions</h2>
         <div className={classes.questions}>
           <hr />
-          {questions?.map((item) => {
+          {questionsToShow?.map((item) => {
             const favicon = item?.username[0].toUpperCase();
             return (
               <div key={item.question_id}>
@@ -65,6 +98,24 @@ function HomePage() {
             );
           })}
         </div>
+
+        {/* See More or See Less buttons */}
+        {questions.length > 5 && (
+          <div className={classes.see_more_container}>
+            {displayedQuestions < questions.length && (
+              <Button className={classes.see_more_button} onClick={seeMore}>
+                See More ({questions.length - displayedQuestions} more)
+              </Button>
+            )}
+            {displayedQuestions > 5 && (
+              <Button className={classes.see_less_button} onClick={seeLess}>
+                See Less
+              </Button>
+            )}
+          </div>
+        )}
+
+
       </div>
     </div>
   );
