@@ -24,7 +24,6 @@ export async function askquestion(req, res) {
       [userId, title, description, tag || null]
     );
 
-
     //success response
      res
       .status(StatusCodes.CREATED)

@@ -1,17 +1,17 @@
 import React, { useContext, useEffect } from 'react'
 import {Route, Routes, useNavigate} from 'react-router-dom'
-import HomePage from './Pages/HomePage/HomePage'
+import HomePage from './pages/HomePage/HomePage'
 import AuthPage from './pages/Auth/AuthPage'
 import Header from './Components/Header/Header'
 import Footer from './Components/Footer/Footer'
-import Answer from './Pages/Answer/Answer'
+import Answer from './pages/Answer/Answer'
 import axios from './utils/axios'
 import { Type } from './utils/action'
 import { Context } from './Components/Context'
-import AskQuestion from './Pages/AskQuestion/AskQuestion'
-import Howitwork from './Pages/Howitwork/Howitwork'
+import AskQuestion from './pages/AskQuestion/AskQuestion'
+import Howitwork from './pages/Howitwork/Howitwork'
 import Protected from './Components/Protected'
-import Profile from './Pages/Profile/Profile'
+import Profile from './pages/Profile/Profile'
 function Router() {
   const navigate = useNavigate()
   const [{user}, dispatch] = useContext(Context)
