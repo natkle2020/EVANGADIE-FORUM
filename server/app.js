@@ -13,37 +13,43 @@ const port = process.env.PORT;
 // ✅ Middlewares
 app.use(cors());
 app.use(express.json());
+
 //API Routes
 app.use("/api/auth", userRouter);
 app.use("/api/questions", questionRouter); //changed to /api/questions for testing
 app.use("/api/answers", answerRouter);
 
+
+
+
 // ✅ Test DB Connection
 const testConnection = async () => {
+  let connection;
   try {
-    const connection = await pool.getConnection();
+    connection = await pool.getConnection();
     console.log("✅ MySQL connected via pool!");
-    connection.release();
+    
     return true;
   } catch (err) {
     console.error("❌ MySQL error:", err); //Logging the Whole Error object for debugging
     return false;
+  }finally{
+    if(connection) connection.release();
   }
 };
 
 // ✅ Start the server
 const startServer = async () => {
-    console.log("🔄 Testing database connection...");
+    console.log(" Testing database connection...");
     const isConnected = await testConnection();
     
   if (!isConnected) {
     console.error("Failed to connect to database. Exiting...");
     process.exit(1); //Kills the app if database fails
   }
-
   if (process.env.INIT_DB === "true") {
     try {
-      await createAllTables();
+      createAllTables();
     } catch (err) {
       console.error("Failed to initialize tables. Exiting...");
       process.exit(1);
