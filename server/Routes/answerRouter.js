@@ -10,7 +10,7 @@ const router = express.Router();
 //protected route to post an answer(using JWT Token)
 router.post('/', authMiddleware, postAnswer);
 
-//public route to get answer
+//protected route to get answer
 router.get('/:id', authMiddleware, getAnswer)
 
 export default router;
