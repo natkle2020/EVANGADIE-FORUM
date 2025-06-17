@@ -8,10 +8,11 @@ import { timeAgo } from "../../utils/formatter";
 import { Button, Spinner } from "react-bootstrap";
 function HomePage() {
   const [questions, setQuestions] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
   const [displayedQuestions, setDisplayedQuestions] = useState(5);
-   const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     (async () => {
@@ -23,12 +24,11 @@ function HomePage() {
         setQuestions(response?.data?.data);
       } catch (error) {
         console.log(error);
-      }finally{
+      } finally {
         setLoading(false);
       }
     })();
   }, []);
-
 
   //handling see more
   const seeMore = () => {
@@ -38,26 +38,25 @@ function HomePage() {
   const seeLess = () => {
     setDisplayedQuestions(5);
     // Scroll to top when showing less
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   // Get the questions to display based on the current limit
-  const questionsToShow = questions.slice(0, displayedQuestions);
-
-
-
+  // const questionsToShow = questions.slice(0, displayedQuestions);
+  const filteredQuestions = questions.filter((q) =>
+    q.title.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+  const questionsToShow = filteredQuestions.slice(0, displayedQuestions);
 
   if (loading) {
     return (
       <div className={classes.loadingContainer}>
-        <Spinner animation="border" variant="warning" >
+        <Spinner animation="border" variant="warning">
           {/* <p>Loading questions...</p> */}
         </Spinner>
-      
       </div>
     );
   }
-
 
   return (
     <div className={classes.homepage}>
@@ -74,9 +73,18 @@ function HomePage() {
         </div>
       </div>
       <div className={classes.body}>
+        <div className={classes.searchContainer}>
+          <input
+            type="text"
+            placeholder="Search questions..."
+            className={classes.searchInput}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+
         <h2>Questions</h2>
         <div className={classes.questions}>
-          <hr />
           {questionsToShow?.map((item) => {
             const favicon = item?.username[0].toUpperCase();
             return (
@@ -92,7 +100,6 @@ function HomePage() {
                       <p>{timeAgo(item.time)}</p>
                     </div>
                   </div>
-                  <hr />
                 </Link>
               </div>
             );
@@ -114,8 +121,6 @@ function HomePage() {
             )}
           </div>
         )}
-
-
       </div>
     </div>
   );
