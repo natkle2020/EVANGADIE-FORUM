@@ -57,7 +57,7 @@ function Answer() {
         <div className={classes.question}>
 
       <h3 className={classes.title}>{question?.title}</h3>
-      <p>Tag: {question?.tag}</p>
+      <p>Tag: {question?.data?.data?.tag}</p>
       <p>Asked By: {question?.asked_by?.first_name}</p>
       {/* <p>{timeAgo(question?.time)}</p> */}
       <p>{question?.description}</p>

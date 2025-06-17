@@ -6,7 +6,6 @@ import userRouter from "./Routes/userRouter.js";
 import answerRouter from "./Routes/answerRouter.js";
 import questionRouter from "./Routes/questionRouter.js";
 
-
 const app = express();
 const port = process.env.PORT;
 
@@ -17,9 +16,6 @@ app.use(express.json());
 app.use("/api/auth", userRouter);
 app.use("/api/questions", questionRouter); //changed to /api/questions for testing
 app.use("/api/answers", answerRouter);
-
-
-
 
 // ✅ Test DB Connection
 const testConnection = async () => {
@@ -36,9 +32,9 @@ const testConnection = async () => {
 
 // ✅ Start the server
 const startServer = async () => {
-    console.log("🔄 Testing database connection...");
-    const isConnected = await testConnection();
-    
+  console.log("🔄 Testing database connection...");
+  const isConnected = await testConnection();
+
   if (!isConnected) {
     console.error("Failed to connect to database. Exiting...");
     process.exit(1); //Kills the app if database fails
