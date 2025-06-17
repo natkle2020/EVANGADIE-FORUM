@@ -1,24 +1,30 @@
-import React, { useContext, useRef, useState } from "react";
- import axios from '../../utils/axios'
+import React, { useContext, useEffect, useRef, useState } from "react";
+import axios from "../../utils/axios";
 import { Type } from "../../utils/action";
 import { Alert, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { Context } from "../../Components/Context";
-import styles from './AuthPage.module.css'
+import styles from "./AuthPage.module.css";
 
-function Login({toggler}) {
+function Login({ toggler }) {
   const [status, setStatus] = useState({ message: "", type: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [{user}, dispatch] = useContext(Context)
+  const [{ user }, dispatch] = useContext(Context);
   const navigate = useNavigate();
-
-
-
-
 
   const emailLoginRef = useRef();
   const passwordLoginRef = useRef(null);
+
+
+
+   // Redirecting if user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
+
 
   //Simple Message
   const showStatus = (message, type) => {
@@ -33,7 +39,7 @@ function Login({toggler}) {
   //Form Validation Function
   const validateForm = () => {
     const email = emailLoginRef.current.value.trim();
-    const password = passwordLoginRef.current.value;
+    const password = passwordLoginRef.current.value.trim();
 
     //CHECKING FOR EMPTY FELIDS
     if (!email || !password) {
@@ -61,43 +67,43 @@ function Login({toggler}) {
 
       const result = await axios.post("/auth/login", credentials);
 
-      console.log("Login response:", result.data);
+      // console.log("Login response:", result.data);
 
       if (result.data?.success) {
         const token = result?.data?.token;
         const username = result?.data?.user.username;
         const user_id = result?.data?.user?.user_id;
 
-        //The after storing them in localStorage
+        //Then we will store them in localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("username", username);
         localStorage.setItem("user_id", user_id);
-       
+
 
         // So after setting the token & user in localStorage we Update the context
-         dispatch({
+        dispatch({
           type: Type.SET_USER,
           user: result.data.user,
         });
-         console.log("User set in context:", result.data.user);
+        //  console.log("User set in context:", result.data.user);
 
         showStatus("Login successful! Redirecting...", "success");
 
-        // So after login We Navigate to home after short delay to show success message
+
+        // So after login We Navigate to home after short delay to show the success message
         setTimeout(() => {
           navigate("/");
-        }, 1500);
-        
-    
-      }else {
+        }, 5000);
+
+
+      } else {
         console.log("Login failed:", result.data);
 
         showStatus("Login failed. Please try again.");
       }
-
-
     } catch (error) {
-      const errorMessage = error.response?.data?.error || "Something went wrong!";
+      const errorMessage =
+        error.response?.data?.error || "Something went wrong!";
       showStatus(errorMessage, "error");
     } finally {
       setLoading(false);
@@ -108,14 +114,12 @@ function Login({toggler}) {
     setShowPassword((prev) => !prev);
   }
 
- 
-
   return (
     <div className={styles.formCard}>
       <h3>Login to your account</h3>
       <p className={styles.registerText}>
         Don’t have an account?{" "}
-        <Link to = "/auth" onClick={toggler}>
+        <Link to="/auth" onClick={toggler}>
           Create a new account
         </Link>
       </p>
@@ -143,8 +147,8 @@ function Login({toggler}) {
         <p className={styles.eye} onClick={handleShowPassword}>
           {showPassword ? `👀` : "👁️‍🗨️"}
         </p>
-        
-        <button type="submit" disabled = {loading}>
+
+        <button type="submit" disabled={loading}>
           {loading ? (
             <>
               <Spinner animation="border" size="sm" /> Logging In...
@@ -154,7 +158,7 @@ function Login({toggler}) {
           )}
         </button>
       </form>
-      <Link className={styles.createAccount} to = "#" onClick={toggler}>
+      <Link className={styles.createAccount} to="#" onClick={toggler}>
         Create an account?
       </Link>
     </div>

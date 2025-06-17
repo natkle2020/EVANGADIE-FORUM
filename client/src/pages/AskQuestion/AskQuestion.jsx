@@ -16,13 +16,18 @@ function AskQuestion() {
     e.preventDefault();
 
     if (!title.trim() || !description.trim()) {
-      setPostError("Title, Question, and Description are required.");
+      setPostError("Title and Description are required.");
       return;
     }
 
     const token = localStorage.getItem("token");
     if (!token) {
       setPostError("You must be logged in to post a question.");
+
+      // Clear error message after 5 seconds
+      setTimeout(() => {
+        setPostError(null);
+      }, 5000);
       return;
     }
     setPosting(true);
@@ -39,12 +44,24 @@ function AskQuestion() {
         }
       );
       setPostSuccess("Question posted successfully!");
+
+       // Clearing success message after 4 seconds
+      setTimeout(() => {
+        setPostSuccess(null);
+      }, 4000);
+
+
       setTitle("");
       setDescription("");
       setTag("");
     } catch (err) {
       console.log(err)
       setPostError(err.response?.data?.message || "Failed to post question.");
+
+       // Clear error message after 5 seconds
+      setTimeout(() => {
+        setPostError(null);
+      }, 5000);
     } finally {
       setPosting(false);
     }
@@ -64,6 +81,13 @@ function AskQuestion() {
             </ul>
            </div>
       <h1>Post Your Question</h1>
+
+      {postError && <p className={styles.error}>{postError}</p>}
+        {postSuccess && <p className={styles.success}>{postSuccess}</p>}
+
+
+
+
       <form className={styles.postQuestionForm} onSubmit={handlePostQuestion}>
         <label>
           Title<span className={styles.required}>*</span>:
@@ -122,8 +146,7 @@ function AskQuestion() {
         <button type="submit" disabled={posting}>
           {posting ? "Posting..." : "Post Question"}
         </button>
-        {postError && <p className={styles.error}>{postError}</p>}
-        {postSuccess && <p className={styles.success}>{postSuccess}</p>}
+        
       </form>
     </div>
     </div>

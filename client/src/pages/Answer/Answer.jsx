@@ -2,7 +2,8 @@ import React, { useEffect, useRef, useState } from 'react'
 import axios from '../../utils/axios'
 import classes from './Answer.module.css'
 import { useParams } from 'react-router-dom'
-// import { timeAgo } from '../../utils/formatter'
+import { BsPatchQuestionFill } from "react-icons/bs";
+
 
 function Answer() {
     const {qid} =useParams()
@@ -56,14 +57,22 @@ function Answer() {
 
         <div className={classes.question}>
 
-      <h3 className={classes.title}>{question?.title}</h3>
+      <h3 className={classes.title}><BsPatchQuestionFill /> {question?.title}</h3>
       <p>Tag: {question?.tag}</p>
-      <p>Asked By: {question?.asked_by?.first_name}</p>
-      {/* <p>{timeAgo(question?.time)}</p> */}
+      {/* <p>Asked By: {question?.asked_by?.first_name}</p> */}
       <p>{question?.description}</p>
         </div>
       <div className={classes.answer}>
         <h3>Recent Answers</h3>
+
+           {answer.length === 0 && (
+          <div className={classes.no_answers}>
+            <p>No answers yet. Be the first to answer this question!</p>
+          </div>
+        )}
+
+
+
         <div className={classes.answer_list}>
             {
                 answer.map(item => {
