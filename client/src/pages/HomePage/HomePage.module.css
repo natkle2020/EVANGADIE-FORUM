@@ -139,3 +139,53 @@
     max-width: 200px;
   }
 }
+.actionButtons {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+  justify-content: flex-end;
+}
+
+.editBtn,
+.deleteBtn {
+  background: #0077ff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  width: auto;            
+  display: inline-block;  
+  margin: 7px;
+}
+
+.deleteBtn {
+  background: #b00020;
+}
+
+.editBtn:hover {
+  background-color: #005ecb;
+}
+
+.deleteBtn:hover {
+  background-color: #900014;
+}
+.successMessage {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #4bb543; /* green */
+  color: white;
+  padding: 12px 24px;
+  border-radius: 0 0 8px 8px;
+  font-weight: 600;
+  z-index: 1100;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  max-width: 90%;
+  text-align: center;
+}
+

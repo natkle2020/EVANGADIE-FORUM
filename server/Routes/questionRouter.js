@@ -1,5 +1,7 @@
 import {
   askquestion,
+  editQuestion,
+  deleteQuestion,
   getAllQuestions,
   getSingleQuestion,
 } from "../controller/questionController.js";
@@ -12,6 +14,12 @@ const router = express.Router(); //create new router object
 
 // Insert question - Only logged-in users
 router.post("/", authMiddleware, askquestion);
+
+router.patch("/:question_id", authMiddleware, editQuestion);
+
+// Delete question - Only logged-in users
+router.delete("/:question_id", authMiddleware, deleteQuestion);
+
 
 //all question route
 router.get("/", authMiddleware, getAllQuestions);
