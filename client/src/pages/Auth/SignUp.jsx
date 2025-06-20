@@ -42,7 +42,7 @@ function SignUp({ toggler }) {
     if (!password || password.length < 8) invalids.push("password");
 
     setInvalidFields(invalids);
-    if (invalids.length > 0) {
+    if (invalids.length > 1) {
       if (invalids.includes("password")) {
         showStatus("Password must be at least 8 characters.", "error");
       } else {

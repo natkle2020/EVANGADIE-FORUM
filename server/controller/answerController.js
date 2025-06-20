@@ -14,11 +14,6 @@ export async function postAnswer(req, res) {
     });
   }
 
-<<<<<<< HEAD
-	// Extract questionid and answer from request body
-	const answer = req.body.answer?.trim(); //*************************************where is answer coming from???????????? 2. BA*/
-	const questionId = parseInt(req.body.question_id);
-=======
   // Get user ID from authenticated user (set by authMiddleware)
   const userId = parseInt(user_id);
   if (isNaN(userId)) {
@@ -28,7 +23,6 @@ export async function postAnswer(req, res) {
       error: "Invalid user ID",
     });
   }
->>>>>>> main
 
   // Validating request body
   if (!req.body) {
