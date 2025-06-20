@@ -16,6 +16,7 @@ export async function askquestion(req, res) {
     });
   }
 
+
   try {
     const result = await pool.execute(
       "INSERT INTO questions (user_id, title, description, tag) VALUES (?, ?, ?, ?)",
