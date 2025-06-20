@@ -12,15 +12,16 @@ export async function askquestion(req, res) {
       success: false,
       status: 400,
       error: "Please Provide all the required fields.",
+      msg: "Title question and Description are required.",
     });
   }
+
 
   try {
     const result = await pool.execute(
       "INSERT INTO questions (user_id, title, description, tag) VALUES (?, ?, ?, ?)",
       [userId, title, description, tag || null]
     );
-    // console.log(result)
 
     //success response
     res.status(StatusCodes.CREATED).json({
@@ -33,7 +34,72 @@ export async function askquestion(req, res) {
     console.error(error);
     return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       error: "Failed to post question. Please try again later",
+      msg: "Something went wrong, try again.",
     });
+  }
+}
+
+// Edit question
+export async function editQuestion(req, res) {
+  const question_id = req.params.question_id;
+  const { title, description, tag } = req.body;
+  const timestamp = new Date();
+
+  if (!description || !title) {
+    return res
+      .status(StatusCodes.BAD_REQUEST)
+      .send("Title and Description are required.");
+  }
+
+  const updateQuery = `
+    UPDATE questions 
+    SET title = ?, description = ?, tag = ?, time = ?
+    WHERE question_id = ?
+  `;
+
+  try {
+    const [result] = await pool.execute(updateQuery, [
+      title,
+      description,
+      tag || null,
+      timestamp,
+      question_id,
+    ]);
+
+    if (result.affectedRows === 0) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .send(`No question with id ${question_id}`);
+    } else {
+      return res.json({ msg: "Question updated successfully." });
+    }
+  } catch (err) {
+    console.error("Failed to update question:", err.message);
+    return res
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .send("Failed to update question");
+  }
+}
+
+
+// Delete question
+export async function deleteQuestion(req, res) {
+  const question_id = req.params.question_id;
+
+  const deleteQuery = `DELETE FROM questions WHERE question_id = ?`;
+
+  try {
+    const [result] = await pool.execute(deleteQuery, [question_id]);
+
+    if (result.affectedRows === 0) {
+      return res
+        .status(StatusCodes.NOT_FOUND)
+        .send(`No question with id ${question_id}`);
+    } else {
+      return res.json({ msg: "Question deleted successfully." });
+    }
+  } catch (err) {
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).send(err.message);
   }
 }
 
@@ -44,6 +110,7 @@ export async function getAllQuestions(req, res) {
         q.question_id, 
         q.title, 
         q.time, 
+         q.user_id,   
         u.username 
       FROM 
         questions q
@@ -65,6 +132,7 @@ export async function getAllQuestions(req, res) {
     console.error("Get all questions error:", error.message);
     res.status(500).json({
       success: false,
+      message: "Internal Server Error",
       error: "Failed to retrieve questions. Please try again later",
     });
   }
@@ -74,23 +142,23 @@ export const getSingleQuestion = async (req, res) => {
   const { question_id } = req.params;
 
   const questionQuery = `
-    SELECT q.*, u.username, u.first_name, u.last_name
-    FROM questions q
-    JOIN users u ON q.user_id = u.user_id
-    WHERE q.question_id = ?
-  `;
+  SELECT q.*, u.username, u.first_name , u.last_name
+  FROM questions q
+  JOIN users u ON q.user_id = u.user_id
+  WHERE q.question_id = ?
+`;
 
   try {
     const [result] = await pool.execute(questionQuery, [question_id]);
 
     if (result.length === 0) {
-      return res.status(StatusCodes.NOT_FOUND).json({
+      return res.status(StatusCodes.BAD_REQUEST).json({
         success: false,
         status: 404,
-        error: "Question not found",
+        error: "not found",
+        message: "Question not found",
       });
     }
-
     const [data] = result;
 
     res.status(StatusCodes.OK).json({

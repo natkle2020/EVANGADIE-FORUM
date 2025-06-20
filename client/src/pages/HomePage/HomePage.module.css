@@ -183,6 +183,51 @@ body {
   min-height: 50vh;
   gap: 1rem;
 }
+/* ********************************************************* */
+.actionButtons {
+  display: flex;
+  gap: 10px;
+  margin-top: 5px;
+  justify-content: flex-end;
+}
+.editBtn,
+.deleteBtn {
+  background: #0077ff;
+  border: none;
+  padding: 5px 12px;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: background-color 0.3s ease;
+  width: auto;
+  display: inline-block;
+  margin: 7px;
+}
+.deleteBtn {
+  background: #b00020;
+}
+.editBtn:hover {
+  background-color: #005ecb;
+}
+.deleteBtn:hover {
+  background-color: #900014;
+}
+.editBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; /* Add this line for space between icon and text */
+}
+.deleteBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px; /* space between icon and text */
+}
+
+
 
 /* ===== Responsive ===== */
 @media (max-width: 768px) {
