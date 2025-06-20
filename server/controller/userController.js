@@ -74,7 +74,7 @@ export async function login(req, res) {
 
   if (!email || !password) {
     return res.status(StatusCodes.BAD_REQUEST).json({
-      msg: "please enter all rquired fields",
+      msg: "please enter all required fields",
       error: "Email and Password are Required",
     });
   }

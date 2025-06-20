@@ -3,15 +3,15 @@ import HomePage from './pages/HomePage/HomePage.jsx'
 import AuthPage from './pages/Auth/AuthPage'
 import Header from './Components/Header/Header'
 import Footer from './Components/Footer/Footer'
-import Answer from './Pages/Answer/Answer'
+import Answer from './Pages/Answer/Answer.jsx'
 import AskQuestion from './Pages/AskQuestion/AskQuestion'
 import Howitwork from './Pages/Howitwork/Howitwork'
 import Protected from './Components/Protected'
-import Profile from './Pages/Profile/Profile'
+import Profile from './pages/Profile/Profile.jsx'
 import { Spinner } from 'react-bootstrap';
 import { useContext } from 'react'
 import { Context } from './Components/Context'
-import { GeminiChat } from './Components/GeminiChat/GeminiChat.jsx'
+
 
 
 function Router() {
@@ -38,7 +38,6 @@ function Router() {
             <Route path="/askquestion" element={<Protected><AskQuestion /></Protected>} />
             <Route path='/howitwork' element={<Howitwork />}/>   
             <Route path='/profile' element={<Protected><Profile /></Protected>}/>    
-            <Route path='/gemini-chat' element={<GeminiChat />}/>    
         </Routes>
     <Footer />
     </>

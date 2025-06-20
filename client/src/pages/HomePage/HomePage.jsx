@@ -6,7 +6,6 @@ import { Context } from "../../Components/Context";
 import { Link } from "react-router-dom";
 import { timeAgo } from "../../utils/formatter";
 import { Button, Spinner } from "react-bootstrap";
-import { GeminiChat } from "../../Components/GeminiChat/GeminiChat";
 function HomePage() {
   const [questions, setQuestions] = useState([]);
   const username = localStorage.getItem("username");
@@ -20,7 +19,7 @@ function HomePage() {
         const response = await axios.get("/questions", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(response);
+        // console.log(response);
         setQuestions(response?.data?.data);
       } catch (error) {
         console.log(error);
@@ -115,8 +114,6 @@ function HomePage() {
             )}
           </div>
         )}
-
-        <GeminiChat />
 
 
       </div>

@@ -7,6 +7,7 @@ import { Context } from "../../Components/Context";
 import styles from "./AuthPage.module.css";
 
 function Login({ toggler }) {
+  
   const [status, setStatus] = useState({ message: "", type: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
