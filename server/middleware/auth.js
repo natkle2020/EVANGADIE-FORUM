@@ -2,7 +2,7 @@ import { StatusCodes } from "http-status-codes";
 import jwt from "jsonwebtoken";
 
 async function authMiddleware(req, res, next) {
-  const authHeader = req.headers.authorization; 
+  const authHeader = req.headers.authorization;     //EXPECTED 'Bearer Token'
 
 if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res
@@ -17,7 +17,7 @@ if (!authHeader || !authHeader.startsWith("Bearer ")) {
 
 try {
     const { username, user_id } = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = { username, user_id };
+    req.user = { username, user_id }; 
     next();
   } catch (error) {
 
