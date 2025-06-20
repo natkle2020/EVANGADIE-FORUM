@@ -12,6 +12,7 @@ const EditQuestion = () => {
   const [description, setDescription] = useState("");
   const [tag, setTag] = useState("");
   const [loading, setLoading] = useState(true);
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     async function fetchQuestion() {
@@ -44,25 +45,23 @@ const EditQuestion = () => {
           title,
           description,
           tag,
-          question: description,
         },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
 
-      // Replace alert with navigate and success message
-      navigate("/", {
-        state: {
-          successMessage: "Question updated successfully",
-          fromEdit: true,
-        },
-      });
+      setSuccessMessage("Question updated successfully");
+      setTimeout(() => {
+        setSuccessMessage("");
+      }, 4000);
+
     } catch (err) {
       console.error(err);
       alert("Failed to update question.");
     }
   };
+  
 
   if (loading) return <p>Loading question data...</p>;
 
@@ -105,7 +104,6 @@ const EditQuestion = () => {
             <option value="typescript">TypeScript</option>
             <option value="ruby">Ruby</option>
             <option value="swift">Swift</option>
-
             <option value="react">React</option>
             <option value="vue">Vue.js</option>
             <option value="nodejs">Node.js</option>
@@ -123,6 +121,9 @@ const EditQuestion = () => {
           Save Changes
         </button>
       </form>
+      {successMessage && (
+        <div className={classes.successMessage}>{successMessage}</div>
+      )}
     </div>
   );
 };

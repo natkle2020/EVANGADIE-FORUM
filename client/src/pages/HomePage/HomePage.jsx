@@ -4,11 +4,11 @@ import axios from "../../utils/axios";
 import { Context } from "../../Components/Context";
 import { Link, useLocation } from "react-router-dom";
 import { timeAgo } from "../../utils/formatter";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 function HomePage() {
   const [questions, setQuestions] = useState([]);
   const [questionToDelete, setQuestionToDelete] = useState(null);
-  const [successMessage, setSuccessMessage] = useState("");
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
   const loggedInUserId = localStorage.getItem("user_id");
@@ -28,15 +28,6 @@ function HomePage() {
       }
     })();
   }, []);
-
-  // Show success message after edit
-  useEffect(() => {
-    if (location.state?.successMessage) {
-      setSuccessMessage(location.state.successMessage);
-      const timer = setTimeout(() => setSuccessMessage(""), 5000);
-      return () => clearTimeout(timer);
-    }
-  }, [location.state]);
 
   // Delete logic
   const confirmDelete = (question_id) => {
@@ -147,9 +138,9 @@ function HomePage() {
       </div>
 
       <div className={classes.body}>
-        {successMessage && (
+        {/* {successMessage && (
           <div className={classes.successMessage}>{successMessage}</div>
-        )}
+        )} */}
         <h2>Questions</h2>
         <div className={classes.questions}>
           <hr />
@@ -175,12 +166,16 @@ function HomePage() {
                 {isOwner && (
                   <div className={classes.actionButtons}>
                     <Link to={`/editquestion/${item.question_id}`}>
-                      <button className={classes.editBtn}>Edit</button>
+                      <button className={classes.editBtn}>
+                        <FaEdit style={{ marginRight: "5px" }} />
+                        Edit
+                      </button>
                     </Link>
                     <button
                       className={classes.deleteBtn}
                       onClick={() => confirmDelete(item.question_id)}
                     >
+                      <FaTrash style={{ marginRight: "6px" }} />
                       Delete
                     </button>
                   </div>
