@@ -1,4 +1,4 @@
-/* ===== Reset & Base ===== */
+/* Reset & Base */
 * {
   margin: 0;
   padding: 0;
@@ -10,7 +10,7 @@ body {
   font-weight: 400;
 }
 
-/* ===== Layout ===== */
+/* Layout */
 .homepage {
   padding: 5vh 10vw;
   background-image: url(../../assets/backgound_graphics.png);
@@ -22,7 +22,7 @@ body {
   gap: 30px;
 }
 
-/* ===== Header ===== */
+/* Header */
 .head {
   display: flex;
   justify-content: space-between;
@@ -57,7 +57,7 @@ body {
   opacity: 0.8;
 }
 
-/* ===== Search ===== */
+/* Search */
 .searchContainer {
   display: flex;
   justify-content: center;
@@ -79,7 +79,7 @@ body {
   border-color: #3d3da5;
 }
 
-/* ===== Header Row (Questions + Pagination) ===== */
+/* Header Row */
 .headerRow {
   display: flex;
   justify-content: space-between;
@@ -88,15 +88,12 @@ body {
   gap: 1rem;
 }
 
-.headerRow h2 {
-  margin: 0;
-}
-
-/* ===== Questions List ===== */
+/* Questions */
 .questions {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  margin-top: 20px;
 }
 
 .single {
@@ -108,7 +105,6 @@ body {
   background: rgba(255, 255, 255, 0.6);
   border-radius: 10px;
   backdrop-filter: blur(15px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;
 }
 
@@ -148,11 +144,12 @@ body {
   color: #555;
 }
 
-/* ===== Pagination ===== */
+/* Pagination */
 .pagination {
   display: flex;
   align-items: center;
   gap: 10px;
+  margin-bottom: 15px;
 }
 
 .paginationButton {
@@ -174,7 +171,7 @@ body {
   font-weight: bold;
 }
 
-/* ===== Loading Spinner ===== */
+/* Loading Spinner */
 .loadingContainer {
   display: flex;
   flex-direction: column;
@@ -183,15 +180,23 @@ body {
   min-height: 50vh;
   gap: 1rem;
 }
-/* ********************************************************* */
+
+/* Action Buttons inside question box */
 .actionButtons {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
-  margin-top: 5px;
   justify-content: flex-end;
+  padding-right: 10px;
+  grid-column: 1 / -1;
 }
+
 .editBtn,
 .deleteBtn {
+  display: inline-flex; /* instead of 'flex' */
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   background: #0077ff;
   border: none;
   padding: 5px 12px;
@@ -201,35 +206,72 @@ body {
   font-weight: 500;
   font-size: 0.9rem;
   transition: background-color 0.3s ease;
-  width: auto;
-  display: inline-block;
-  margin: 7px;
+  white-space: nowrap;         /* Prevent text from wrapping */
+  width: auto;                 /* Ensure button width is content-based */
+  max-width: max-content;      /* Optional safeguard */
 }
+
+
 .deleteBtn {
   background: #b00020;
 }
+
 .editBtn:hover {
   background-color: #005ecb;
 }
+
 .deleteBtn:hover {
   background-color: #900014;
 }
-.editBtn {
+
+/* Confirm Modal */
+.confirmModalBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 6px; /* Add this line for space between icon and text */
+  align-items: center;
+  z-index: 1000;
 }
-.deleteBtn {
+
+.confirmModalContent {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 90%;
+  text-align: center;
+}
+
+.confirmModalActions {
+  margin-top: 20px;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 6px; /* space between icon and text */
+  gap: 20px;
 }
 
+.confirmModalActions button {
+  padding: 8px 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
+.confirmModalActions button:first-child {
+  background-color: #ccc;
+}
 
-/* ===== Responsive ===== */
+.confirmModalActions button:last-child {
+  background-color: #b00020;
+  color: white;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
   .homepage {
     padding: 5vh 5vw;
@@ -237,7 +279,7 @@ body {
 
   .single {
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: auto auto;
+    grid-template-rows: auto auto auto;
     row-gap: 10px;
   }
 
