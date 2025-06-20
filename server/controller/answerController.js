@@ -34,7 +34,7 @@ export async function postAnswer(req, res) {
 	}
 
 	// Extract questionid and answer from request body
-	const answer = req.body.answer?.trim();
+	const answer = req.body.answer?.trim(); //*************************************where is answer coming from???????????? 2. BA*/
 	const questionId = parseInt(req.body.question_id);
 
 	// Validate required fields

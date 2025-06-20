@@ -24,28 +24,29 @@ const testConnection = async () => {
   try {
     connection = await pool.getConnection();
     console.log("✅ MySQL connected via pool!");
-    
+
     return true;
   } catch (err) {
     console.error("❌ MySQL error:", err); //Logging the Whole Error object for debugging
     return false;
-  }finally{
-    if(connection) connection.release();
+  } finally {
+    if (connection) connection.release();
   }
 };
 
 // ✅ Start the server
 const startServer = async () => {
-    console.log(" Testing database connection...");
-    const isConnected = await testConnection();
-    
+  console.log(" Testing database connection...");
+  const isConnected = await testConnection();
+
   if (!isConnected) {
     console.error("Failed to connect to database. Exiting...");
     process.exit(1); //Kills the app if database fails
   }
   if (process.env.INIT_DB === "true") {
     try {
-      createAllTables();
+      // createAllTables(); //calling this without await, might lead to race conditions****************************** 1.BA
+      await createAllTables();
     } catch (err) {
       console.error("Failed to initialize tables. Exiting...");
       process.exit(1);

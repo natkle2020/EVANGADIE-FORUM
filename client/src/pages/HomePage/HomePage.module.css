@@ -1,4 +1,4 @@
-/* Global reset and font */
+/* ===== Reset & Base ===== */
 * {
   margin: 0;
   padding: 0;
@@ -8,10 +8,9 @@
 body {
   font-family: "Poppins", sans-serif;
   font-weight: 400;
-  font-style: normal;
 }
 
-/* Home page layout */
+/* ===== Layout ===== */
 .homepage {
   padding: 5vh 10vw;
   background-image: url(../../assets/backgound_graphics.png);
@@ -23,7 +22,7 @@ body {
   gap: 30px;
 }
 
-/* Header section */
+/* ===== Header ===== */
 .head {
   display: flex;
   justify-content: space-between;
@@ -58,18 +57,48 @@ body {
   opacity: 0.8;
 }
 
-/* Questions section */
-.body h2 {
-  margin-bottom: 15px;
+/* ===== Search ===== */
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
+.searchInput {
+  width: 100%;
+  max-width: 400px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.searchInput:focus {
+  border-color: #3d3da5;
+}
+
+/* ===== Header Row (Questions + Pagination) ===== */
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.headerRow h2 {
+  margin: 0;
+}
+
+/* ===== Questions List ===== */
 .questions {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-/* Individual question card */
 .single {
   display: grid;
   grid-template-columns: 1fr 5fr 1fr;
@@ -119,34 +148,33 @@ body {
   color: #555;
 }
 
-.single .extra img {
-  width: 20px;
-  object-fit: cover;
-}
-
-/* Search input */
-.searchContainer {
+/* ===== Pagination ===== */
+.pagination {
   display: flex;
-  justify-content: center;
-  margin-bottom: 1rem;
+  align-items: center;
+  gap: 10px;
 }
 
-.searchInput {
-  width: 100%;
-  max-width: 400px;
-  padding: 0.5rem 1rem;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-  outline: none;
-  transition: border-color 0.2s ease;
+.paginationButton {
+  background-color: #3d3da5 !important;
+  border: none !important;
+  color: white !important;
+  padding: 6px 12px !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  font-weight: 500;
 }
 
-.searchInput:focus {
-  border-color: #3d3da5;
+.paginationButton:disabled {
+  opacity: 0.6 !important;
+  cursor: not-allowed !important;
 }
 
-/* Loading spinner */
+.pageInfo {
+  font-weight: bold;
+}
+
+/* ===== Loading Spinner ===== */
 .loadingContainer {
   display: flex;
   flex-direction: column;
@@ -156,47 +184,7 @@ body {
   gap: 1rem;
 }
 
-/* See More / Less buttons */
-.see_more_container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 30px;
-  padding: 20px 0;
-}
-
-.see_more_button,
-.see_less_button {
-  padding: 10px 20px;
-  border-radius: 5px;
-  font-weight: 500;
-  border: none;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.see_more_button {
-  background-color: #007bff;
-  color: white;
-}
-
-.see_more_button:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px);
-}
-
-.see_less_button {
-  background-color: #6c757d;
-  color: white;
-}
-
-.see_less_button:hover {
-  background-color: #545b62;
-  transform: translateY(-2px);
-}
-
-/* Responsive styles */
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .homepage {
     padding: 5vh 5vw;
@@ -208,14 +196,13 @@ body {
     row-gap: 10px;
   }
 
-  .see_more_container {
+  .headerRow {
     flex-direction: column;
-    gap: 10px;
+    align-items: flex-start;
   }
 
-  .see_more_button,
-  .see_less_button {
-    width: 100%;
-    max-width: 200px;
+  .pagination {
+    justify-content: flex-start;
+    flex-wrap: wrap;
   }
 }
