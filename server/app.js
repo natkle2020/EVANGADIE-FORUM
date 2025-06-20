@@ -12,7 +12,12 @@ const port = process.env.PORT;
 
 // ✅ Middlewares
 app.use(cors());
+
+// Middleware to parse JSON
 app.use(express.json());
+
+// Middleware to parse form data
+app.use(express.urlencoded({ extended: true }));
 
 //API Routes
 app.use("/api/auth", userRouter);

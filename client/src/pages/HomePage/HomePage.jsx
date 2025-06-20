@@ -13,7 +13,7 @@ function HomePage() {
   const token = localStorage.getItem("token");
   const loggedInUserId = localStorage.getItem("user_id");
   const [{ user }] = useContext(Context);
-  const location = useLocation();
+
 
   // Fetch questions
   useEffect(() => {

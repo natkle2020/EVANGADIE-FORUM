@@ -26,5 +26,11 @@ router.get("/", authMiddleware, getAllQuestions);
 
 //get a question by id
 router.get("/:question_id",authMiddleware, getSingleQuestion);
+
+// DELETE route for deleting a question
+// router.delete('/:question_id', authMiddleware, deleteQuestion )
+
+
+
 export default router;
 
