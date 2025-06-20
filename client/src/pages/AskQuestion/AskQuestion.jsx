@@ -7,7 +7,6 @@ function AskQuestion() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [tag, setTag] = useState("");
-
   const [posting, setPosting] = useState(false);
   const [postError, setPostError] = useState(null);
   const [postSuccess, setPostSuccess] = useState(null);
@@ -128,7 +127,6 @@ function AskQuestion() {
                           <option value="typescript">TypeScript</option>
                           <option value="ruby">Ruby</option>
                           <option value="swift">Swift</option>
-          
                           <option value="react">React</option>
                           <option value="vue">Vue.js</option>
                           <option value="nodejs">Node.js</option>
