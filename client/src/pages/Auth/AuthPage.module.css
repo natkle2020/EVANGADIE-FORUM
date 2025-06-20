@@ -13,7 +13,7 @@
   box-sizing: border-box;
 }
 
-/* Left Form Card */
+/* Form Container */
 .formCard {
   background-color: #fff;
   padding: 40px 30px;
@@ -27,6 +27,7 @@
   color: #222;
 }
 
+/* Text + Link */
 .registerText {
   font-size: 14px;
   margin-bottom: 20px;
@@ -37,6 +38,7 @@
   text-decoration: none;
 }
 
+/* Form Layout */
 form {
   display: flex;
   flex-direction: column;
@@ -45,17 +47,18 @@ form {
 }
 
 form input {
-    padding: 10px;
-    border: none;
-    border-radius: 4px;
-    font-size: 14px;
-    outline: 2px solid rgb(228, 228, 228);
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: 2px solid rgb(228, 228, 228);
 }
 
-form input:focus{
-    border: none;
-    outline: 1px solid rgb(230, 230, 230);
+form input:focus:not(.errorInput) {
+  border: none;
+  outline: 1px solid rgb(230, 230, 230);
 }
+
 form button {
   padding: 10px;
   background-color: #f37c20;
@@ -66,6 +69,35 @@ form button {
   cursor: pointer;
 }
 
+/* Input Error Styles */
+.errorInput {
+  border: 2px solid #b22222 !important;
+  background-color: #ffe6e6;
+  outline: none;
+}
+
+.errorInput:focus {
+  border-color: #ff4d4d !important;
+  box-shadow: 0 0 4px #ff4d4d;
+}
+
+/* Message Styling */
+.centeredAlert {
+  text-align: center;
+  margin: 12px auto;
+  max-width: 400px;
+  font-weight: 600;
+}
+
+.errorColor {
+  color: #b22222;
+}
+
+.successColor {
+  color: #228b22;
+}
+
+/* Bottom Link */
 .createAccount {
   display: block;
   margin-top: 15px;
@@ -74,14 +106,18 @@ form button {
   font-size: 14px;
   text-decoration: none;
 }
-.nameContainer{
-    display: flex;
-    justify-content: space-between;
+
+/* Names Layout */
+.nameContainer {
+  display: flex;
+  justify-content: space-between;
 }
-.nameContainer input{
-    width: 49%;
+
+.nameContainer input {
+  width: 49%;
 }
-/* Right Info Side */
+
+/* Right Panel */
 .sideinfo {
   color: #444;
   padding: 10px;
@@ -115,28 +151,25 @@ form button {
   border-radius: 4px;
   cursor: pointer;
 }
-.error{
-  font-size: small;
-  color: red;
-  text-align: center;
-}
-.password{
+
+/* Password Eye Icon */
+.password {
   position: relative;
 }
-.eye{
+
+.eye {
   position: absolute;
   top: 42%;
   right: 10px;
   cursor: pointer;
-   -webkit-user-select: none; /* Safari */
-  -ms-user-select: none; /* IE 10 and IE 11 */
-  user-select: none; /* Standard syntax */
+  user-select: none;
 }
-.eye:hover{
+
+.eye:hover {
   transform: scale(1.1);
 }
 
-/* Responsive */
+/* Media Queries */
 @media (max-width: 900px) {
   .login {
     background-image: url(../../assets/backgound_graphics_tab.png);

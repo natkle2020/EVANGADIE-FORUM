@@ -30,19 +30,18 @@ export async function register(req, res) {
     );
 
     if (user.length > 0) {
-      
+      if (user[0].email === email) {
+        return res
+          .status(StatusCodes.CONFLICT)
+          .json({ error: "An account with this email already exists" });
+      }
 
-        if (user[0].email === email) {
-          return res
-            .status(StatusCodes.CONFLICT)
-            .json({ error: "An account with this email already exists" });
-        }
-
-        if (user[0].username === username){
-             return res.status(StatusCodes.CONFLICT).json({ error: 'This username is already taken'});
-           }
+      if (user[0].username === username) {
+        return res
+          .status(StatusCodes.CONFLICT)
+          .json({ error: "This username is already taken" });
+      }
     }
-
 
     //encrypt the password
     const salt = await bcrypt.genSalt(10);
@@ -76,6 +75,7 @@ export async function login(req, res) {
     return res.status(StatusCodes.BAD_REQUEST).json({
       msg: "please enter all required fields",
       error: "Email and Password are Required",
+      // error: "Email and password are required.",//**************************************************************BA */
     });
   }
 
@@ -90,6 +90,7 @@ export async function login(req, res) {
       return res.status(StatusCodes.UNAUTHORIZED).json({
         msg: "User not found",
         error: "Invalid Credentials",
+        // error: "Invalid email or password.",//************************************************************************************************************BA
       });
     }
     //compare password
@@ -126,6 +127,10 @@ export async function login(req, res) {
       sucess: false,
       msg: "something went wrong, try again later!",
       error: `Login Failed. Please Try again Later ${error.message}`,
+
+      // console.error("Login error:", error); // Log full error internally
+      // res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      //   error: "An unexpected error occurred. Please try again later.",//*********************************************BA */
     });
   }
 }

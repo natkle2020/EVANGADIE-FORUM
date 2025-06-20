@@ -34,9 +34,34 @@ function Answer() {
    async function postAnswer(e) {
         e.preventDefault()
         const answerValue = answerRef.current.value
-        if(answerValue.length < 5){
-           return alert('Please enter at least 6 character')
+        // if(answerValue.length < 5){
+        //    return alert('Please enter at least 6 character')
+        // }
+        const [errorMsg, setErrorMsg] = useState("");
+
+        async function postAnswer(e) {
+          e.preventDefault();
+          const answerValue = answerRef.current.value.trim();
+
+          if (answerValue.length < 6) {
+            setErrorMsg("Answer must be at least 6 characters long.");
+            return;
+          }
+
+          try {
+            await axios.post(
+              "/answers",
+              { answer: answerValue, question_id: qid },
+              { headers: { Authorization: `Bearer ${token}` } }
+            );
+            answerRef.current.value = "";
+            setErrorMsg("");
+          } catch (error) {
+            console.log(error);
+            setErrorMsg("Something went wrong. Please try again.");
+          }
         }
+
         try {
            const ansewrPosted = await axios.post('/answers', {
                 answer: answerValue,

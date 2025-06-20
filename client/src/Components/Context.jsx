@@ -78,3 +78,64 @@ function ContextProvider({ children }) {
 }
 
 export default ContextProvider;
+
+
+// import { createContext, useEffect, useReducer } from "react";
+// import { InitialState, Reducer } from "../utils/reducer";
+// import { Type } from "../utils/action";
+// import axios from "../utils/axios";
+
+// export const Context = createContext();
+
+// function ContextProvider({ children }) {
+//   const [state, dispatch] = useReducer(Reducer, InitialState);
+
+//   const clearUserSession = () => {
+//     localStorage.removeItem("token");
+//     dispatch({ type: Type.SET_USER, user: null });
+//   };
+
+//   useEffect(() => {
+//     const checkUser = async () => {
+//       dispatch({ type: Type.SET_LOADING, loading: true });
+
+//       const token = localStorage.getItem("token");
+
+//       if (!token) {
+//         clearUserSession();
+//         dispatch({ type: Type.SET_LOADING, loading: false });
+//         return;
+//       }
+
+//       try {
+//         const res = await axios.get("/auth/checkUser", {
+//           headers: { Authorization: `Bearer ${token}` },
+//         });
+
+//         if (res.data.success) {
+//           dispatch({
+//             type: Type.SET_USER,
+//             user: res.data.user,
+//           });
+//         } else {
+//           clearUserSession();
+//         }
+//       } catch (error) {
+//         console.error(error?.response?.data || error.message);
+//         clearUserSession();
+//       } finally {
+//         dispatch({ type: Type.SET_LOADING, loading: false });
+//       }
+//     };
+
+//     checkUser();
+//   }, []);
+
+//   return (
+//     <Context.Provider value={{ state, dispatch }}>
+//       {children}
+//     </Context.Provider>
+//   );
+// }
+
+// export default ContextProvider;

@@ -7,7 +7,6 @@ import { Context } from "../../Components/Context";
 import styles from "./AuthPage.module.css";
 
 function Login({ toggler }) {
-  
   const [status, setStatus] = useState({ message: "", type: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -17,15 +16,12 @@ function Login({ toggler }) {
   const emailLoginRef = useRef();
   const passwordLoginRef = useRef(null);
 
-
-
-   // Redirecting if user is already logged in
+  // Redirecting if user is already logged in
   useEffect(() => {
     if (user) {
       navigate("/", { replace: true });
     }
   }, [user, navigate]);
-
 
   //Simple Message
   const showStatus = (message, type) => {
@@ -80,7 +76,6 @@ function Login({ toggler }) {
         localStorage.setItem("username", username);
         localStorage.setItem("user_id", user_id);
 
-
         // So after setting the token & user in localStorage we Update the context
         dispatch({
           type: Type.SET_USER,
@@ -90,13 +85,10 @@ function Login({ toggler }) {
 
         showStatus("Login successful! Redirecting...", "success");
 
-
         // So after login We Navigate to home after short delay to show the success message
         setTimeout(() => {
           navigate("/");
         }, 5000);
-
-
       } else {
         console.log("Login failed:", result.data);
 
@@ -146,7 +138,7 @@ function Login({ toggler }) {
           required
         />
         <p className={styles.eye} onClick={handleShowPassword}>
-          {showPassword ? `👀` : "👁️‍🗨️"}
+          {showPassword ? `👀` : "👁‍🗨"}
         </p>
 
         <button type="submit" disabled={loading}>
