@@ -141,7 +141,8 @@ function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
   const username = localStorage.getItem("username");
   const token = localStorage.getItem("token");
-  const [loading, setLoading] = useState(true);
+  const [displayedQuestions, setDisplayedQuestions] = useState(4);
+   const [loading, setLoading] = useState(true);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -153,7 +154,8 @@ function HomePage() {
         const response = await axios.get("/questions", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setQuestions(response?.data?.data || []);
+        // console.log(response);
+        setQuestions(response?.data?.data);
       } catch (error) {
         console.log(error);
       } finally {
@@ -162,20 +164,16 @@ function HomePage() {
     })();
   }, []);
 
-  const filteredQuestions = questions.filter((q) =>
-    q.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
 
-  const totalPages = Math.ceil(filteredQuestions.length / itemsPerPage);
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const questionsToShow = filteredQuestions.slice(
-    indexOfFirstItem,
-    indexOfLastItem
-  );
+  //handling see more
+  const seeMore = () => {
+    setDisplayedQuestions((prevCount) => prevCount + 4); //Show the next 4
+  };
 
-  const handleNextPage = () => {
-    if (currentPage < totalPages) setCurrentPage((prev) => prev + 1);
+  const seeLess = () => {
+    setDisplayedQuestions(4);
+    // So When ever a user clicks seLess button Scrolling to top 
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePrevPage = () => {
@@ -267,8 +265,23 @@ function HomePage() {
           })}
         </div>
 
-        {/* Pagination Controls */}
-     
+        {/* See More or See Less buttons */}
+        {questions.length > 4 && (
+          <div className={classes.see_more_container}>
+            {displayedQuestions < questions.length && (
+              <Button variant="primary" className={classes.see_more_button} onClick={seeMore}>
+                See More ({questions.length - displayedQuestions} more)
+              </Button>
+            )}
+            {displayedQuestions > 4 && (
+              <Button variant="secondary" className={classes.see_less_button} onClick={seeLess}>
+                See Less
+              </Button>
+            )}
+          </div>
+        )}
+
+
       </div>
     </div>
   );

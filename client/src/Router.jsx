@@ -1,17 +1,31 @@
-// import React, { useContext, useEffect, useState } from 'react'
 import {Route, Routes} from 'react-router-dom'
-import HomePage from './Pages/HomePage/HomePage'
+import HomePage from './pages/HomePage/HomePage.jsx'
 import AuthPage from './pages/Auth/AuthPage'
 import Header from './Components/Header/Header'
 import Footer from './Components/Footer/Footer'
-import Answer from './Pages/Answer/Answer'
+import Answer from './Pages/Answer/Answer.jsx'
 import AskQuestion from './Pages/AskQuestion/AskQuestion'
 import Howitwork from './Pages/Howitwork/Howitwork'
 import Protected from './Components/Protected'
-import Profile from './Pages/Profile/Profile'
+import Profile from './pages/Profile/Profile.jsx'
+import { Spinner } from 'react-bootstrap';
+import { useContext } from 'react'
+import { Context } from './Components/Context'
+
 
 
 function Router() {
+
+  const [{loading}] = useContext(Context);
+
+  //So Here We Used loading spinner while checking auto-login
+  if (loading) {
+    return (
+          <div className= 'loadingContainer'>
+            <Spinner animation="border" variant="warning"  size="lg" />
+          </div>
+        );
+  }
 
   return (
     <>

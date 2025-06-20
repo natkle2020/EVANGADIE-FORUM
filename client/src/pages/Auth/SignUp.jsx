@@ -9,7 +9,7 @@ function SignUp({ toggler }) {
   const [loading, setLoading] = useState();
   const [invalidFields, setInvalidFields] = useState([]);
 
-  const emailRef = useRef();
+  const emailRef = useRef(null);
   const passwordRef = useRef(null);
   const first_nameRef = useRef(null);
   const last_nameRef = useRef(null);

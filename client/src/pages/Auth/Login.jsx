@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useContext, useRef, useState } from "react";
+=======
+import React, { useContext, useEffect, useRef, useState } from "react";
+>>>>>>> main
 import axios from "../../utils/axios";
 import { Type } from "../../utils/action";
 import { Alert, Spinner } from "react-bootstrap";
@@ -7,15 +11,32 @@ import { Context } from "../../Components/Context";
 import styles from "./AuthPage.module.css";
 
 function Login({ toggler }) {
+<<<<<<< HEAD
+=======
+  
+>>>>>>> main
   const [status, setStatus] = useState({ message: "", type: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [{ user }, dispatch] = useContext(Context);
   const navigate = useNavigate();
+<<<<<<< HEAD
   const [invalidFields, setInvalidFields] = useState([]);
+=======
+>>>>>>> main
 
   const emailLoginRef = useRef();
   const passwordLoginRef = useRef();
+
+
+
+   // Redirecting if user is already logged in
+  useEffect(() => {
+    if (user) {
+      navigate("/", { replace: true });
+    }
+  }, [user, navigate]);
+
 
   //Simple Message
   const showStatus = (message, type) => {
@@ -42,7 +63,7 @@ function Login({ toggler }) {
   // };
   const validateForm = () => {
     const email = emailLoginRef.current.value.trim();
-    const password = passwordLoginRef.current.value;
+    const password = passwordLoginRef.current.value.trim();
 
     const invalids = [];
     if (!email) invalids.push("email");
@@ -74,31 +95,46 @@ function Login({ toggler }) {
 
       const result = await axios.post("/auth/login", credentials);
 
-      console.log("Login response:", result.data);
+      // console.log("Login response:", result.data);
 
       if (result.data?.success) {
         const token = result?.data?.token;
         const username = result?.data?.user.username;
         const user_id = result?.data?.user?.user_id;
 
-        //The after storing them in localStorage
+        //Then we will store them in localStorage
         localStorage.setItem("token", token);
         localStorage.setItem("username", username);
         localStorage.setItem("user_id", user_id);
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
 
         // So after setting the token & user in localStorage we Update the context
         dispatch({
           type: Type.SET_USER,
           user: result.data.user,
         });
+<<<<<<< HEAD
         console.log("User set in context:", result.data.user);
+=======
+        //  console.log("User set in context:", result.data.user);
+>>>>>>> main
 
         showStatus("Login successful! Redirecting...", "success");
 
-        // So after login We Navigate to home after short delay to show success message
+
+        // So after login We Navigate to home after short delay to show the success message
         setTimeout(() => {
           navigate("/");
+<<<<<<< HEAD
         }, 1500);
+=======
+        }, 5000);
+
+
+>>>>>>> main
       } else {
         console.log("Login failed:", result.data);
 
@@ -162,6 +198,7 @@ function Login({ toggler }) {
           className={invalidFields.includes("email") ? styles.errorInput : ""}
           required
         />
+<<<<<<< HEAD
 
         <div className={styles.password}>
           <input
@@ -177,6 +214,11 @@ function Login({ toggler }) {
             {showPassword ? `👀` : "👁️‍🗨️"}
           </p>
         </div>
+=======
+        <p className={styles.eye} onClick={handleShowPassword}>
+          {showPassword ? `👀` : "👁️‍🗨️"}
+        </p>
+>>>>>>> main
 
         <button type="submit" disabled={loading}>
           {loading ? (

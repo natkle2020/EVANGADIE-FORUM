@@ -15,13 +15,18 @@ function AskQuestion() {
     e.preventDefault();
 
     if (!title.trim() || !description.trim()) {
-      setPostError("Title, Question, and Description are required.");
+      setPostError("Title and Description are required.");
       return;
     }
 
     const token = localStorage.getItem("token");
     if (!token) {
       setPostError("You must be logged in to post a question.");
+
+      // Clear error message after 5 seconds
+      setTimeout(() => {
+        setPostError(null);
+      }, 5000);
       return;
     }
     setPosting(true);
@@ -40,12 +45,24 @@ function AskQuestion() {
         }
       );
       setPostSuccess("Question posted successfully!");
+
+       // Clearing success message after 4 seconds
+      setTimeout(() => {
+        setPostSuccess(null);
+      }, 4000);
+
+
       setTitle("");
       setDescription("");
       setTag("");
     } catch (err) {
       console.log(err);
       setPostError(err.response?.data?.message || "Failed to post question.");
+
+       // Clear error message after 5 seconds
+      setTimeout(() => {
+        setPostError(null);
+      }, 5000);
     } finally {
       setPosting(false);
     }
@@ -53,29 +70,37 @@ function AskQuestion() {
 
   return (
     <div className={styles.ask_container}>
-      <div className={styles.postQuestionContainer}>
-        <div className={styles.steps}>
-          <h1>Steps to write a good question</h1>
-          <ul>
-            <li>Summarize your problem in a one-line title.</li>
-            <li>Describe your problem in more detail.</li>
-            <li>Describe what you tried and what you expected to happen.</li>
-            <li>Review your question and post it to the site.</li>
-          </ul>
-        </div>
-        <h1>Post Your Question</h1>
-        <form className={styles.postQuestionForm} onSubmit={handlePostQuestion}>
-          <label>
-            Title<span className={styles.required}>*</span>:
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="Enter question title"
-              required
-              disabled={posting}
-            />
-          </label>
+
+    <div className={styles.postQuestionContainer}>
+       <div className={styles.steps}>
+            <h1>Steps to write a good question</h1>
+            <ul>
+              <li>Summarize your problem in a one-line title.</li>
+              <li>Describe your problem in more detail.</li>
+              <li>Describe what you tried and what you expected to happen.</li>
+              <li>Review your question and post it to the site.</li>
+            </ul>
+           </div>
+      <h1>Post Your Question</h1>
+
+      {postError && <p className={styles.error}>{postError}</p>}
+        {postSuccess && <p className={styles.success}>{postSuccess}</p>}
+
+
+
+
+      <form className={styles.postQuestionForm} onSubmit={handlePostQuestion}>
+        <label>
+          Title<span className={styles.required}>*</span>:
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter question title"
+            required
+            disabled={posting}
+          />
+        </label>
 
           <label>
             Description
@@ -122,13 +147,12 @@ function AskQuestion() {
             </select>
           </label>
 
-          <button type="submit" disabled={posting}>
-            {posting ? "Posting..." : "Post Question"}
-          </button>
-          {postError && <p className={styles.error}>{postError}</p>}
-          {postSuccess && <p className={styles.success}>{postSuccess}</p>}
-        </form>
-      </div>
+        <button type="submit" disabled={posting}>
+          {posting ? "Posting..." : "Post Question"}
+        </button>
+        
+      </form>
+    </div>
     </div>
   );
 }

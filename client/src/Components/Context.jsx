@@ -5,11 +5,12 @@ import { Type } from "../utils/action";
 import axios from '../utils/axios';
 
 export const Context = createContext();
-
+  //1.global state, 2.Authentication
 function ContextProvider({ children }) {
   const [state, dispatch] = useReducer(Reducer, InitialState);
   
 
+  //Checking if user is authenticated on app load(page reload)(AUTO-LOGIN: on app startup)
   useEffect(() => {
     const checkUser = async () => {
 
@@ -33,7 +34,9 @@ function ContextProvider({ children }) {
         const res = await axios.get("/auth/checkUser", {
           headers: { Authorization: `Bearer ${token}` },
         });
+    
 
+         //AUTO-LOGIN
         if (res.data.success) {
           dispatch({
             type: Type.SET_USER,
