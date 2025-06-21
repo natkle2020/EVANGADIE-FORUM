@@ -1,4 +1,5 @@
 // import { useReducer } from 'react';
+import { useReducer } from 'react';
 import { Type } from './action';
 
 
@@ -20,6 +21,5 @@ export const Reducer = (state, action) => {
       return state;
   }
 };
-
 
 

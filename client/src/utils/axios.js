@@ -1,11 +1,7 @@
-import axios from 'axios';
-
+import axios from "axios";
 
 const axiosInstance = axios.create({
-  baseURL: "http://localhost:3000/api",
-  headers: {
-    'Content-Type': 'application/json',
-  }, 
+  baseURL: "http://localhost:3200/api",
 });
 
-export default axiosInstance
+export default axiosInstance;

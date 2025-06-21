@@ -1,0 +1,83 @@
+.cardLink {
+    text-decoration: none;
+    color: #ffffff;
+    display: block;
+    max-width: 1200px;
+    margin: 0 auto 0 auto;
+  }
+  
+  .card {
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 12px;
+    padding: 1rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s ease;
+  }
+  
+  .card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .avatarSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+  
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+  }
+  
+  .username {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    color: #666;
+    text-align: center;
+  }
+  
+  .contentSection {
+    flex-grow: 1;
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  .iconSection {
+    margin-left: auto;
+    color: #888;
+    flex-shrink: 0;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 600px) {
+    .card {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .avatarSection {
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+  
+    .username {
+      margin-left: 0.5rem;
+      margin-top: 0;
+    }
+  
+    .iconSection {
+      align-self: flex-end;
+      margin-top: 0.5rem;
+    }
+  
+    .contentSection {
+      margin-top: 0.5rem;
+    }
+  }
+  
