@@ -74,8 +74,6 @@ function toggler(e){
       {
         islogin ?
         <Login toggler={toggler} /> : <SignUp  toggler={toggler}/>
-           
-     
       }
      
       <About />

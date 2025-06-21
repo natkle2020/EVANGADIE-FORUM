@@ -17,18 +17,18 @@ function About() {
         <h2> ABOUT US</h2>
         <p>
           Rather than presenting you just the usual corporate overview, I'd like
-          to sahre the story behind Evangadi's inception and the commitment we
+          to share the story behind Evangadi's inception and the commitment we
           hold to our clients.
         </p>
         <p>
           {" "}
           My name is Adugna Bekele, the founder of this development shop. Prior
           to founding Evangadi, I used to work as a senior software engineer
-          taking parts in various projects in the US. For your refrence, I've
+          taking parts in various projects in the US. For your reference, I've
           listed some of these projects below. In 2016, I embraced the challenge
           of founding my own agency, with the goal of offering direct services
           to clients. Now, with over eight years in our experience, we are a
-          dedicated team of highly proficent software engineers, collaborating
+          dedicated team of highly proficient software engineers, collaborating
           to provide top-tier solutions to our clients.
         </p>
         <p>
