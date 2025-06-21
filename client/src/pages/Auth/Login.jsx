@@ -1,5 +1,5 @@
 import React, { useContext, useRef, useState } from "react";
- import axios from '../../utils/axios'
+import axios from '../../utils/axios'
 import { Type } from "../../utils/action";
 import { Alert, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,11 +12,6 @@ function Login({toggler}) {
   const [loading, setLoading] = useState(false);
   const [{user}, dispatch] = useContext(Context)
   const navigate = useNavigate();
-
-
-
-
-
   const emailLoginRef = useRef();
   const passwordLoginRef = useRef(null);
 
@@ -41,7 +36,8 @@ function Login({toggler}) {
       return false;
     }
 
-    return true;
+    return true; 
+    
   };
 
   //Log in Function
@@ -60,6 +56,8 @@ function Login({toggler}) {
       setLoading(true);
 
       const result = await axios.post("/auth/login", credentials);
+// credential declaire adirgenatal lelay email ena password expect yadergal
+
 
       console.log("Login response:", result.data);
 
@@ -122,9 +120,14 @@ function Login({toggler}) {
 
       {status.message && (
         <Alert variant={status.type === "error" ? "danger" : "success"}>
+          {/* If status.type is "error", use a red ("danger") alert. Otherwise, use green ("success") */}
           {status.message}
+{/* Displays the actual message (like "Login successful!" or "Invalid password") */}
+
+
         </Alert>
       )}
+
 
       <form onSubmit={login}>
         <input
@@ -147,7 +150,8 @@ function Login({toggler}) {
         <button type="submit" disabled = {loading}>
           {loading ? (
             <>
-              <Spinner animation="border" size="sm" /> Logging In...
+              <Spinner animation="border" size="sm" /> Logging In... 
+              {/* loding spinner little circle */}
             </>
           ) : (
             "Login"
