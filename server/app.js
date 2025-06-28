@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT;
 
 // ✅ Middlewares
-app.use(cors());
+app.use(cors({ origin: "https://evangadie.nardosteklehaymanot.com/" }));
 
 // Middleware to parse JSON
 app.use(express.json());
